@@ -20,3 +20,4 @@ void generate_hs21_email(char email_destination[email_length], char first_name[f
     strcat(email_destination, surname);
     strcat(email_destination, "@stud.hs21.de");
 }
+

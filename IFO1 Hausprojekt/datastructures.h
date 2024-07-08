@@ -27,9 +27,10 @@ typedef struct student {
     unsigned int student_number;
     char first_name[first_name_length];
     char surname[surname_length];
+    char email[email_length];
     unsigned short int enrollment_year;
     char course_of_study[course_of_study_length];
-    struct home_address;
-    unsigned long int phone_number;
+    struct address home_address;
+    unsigned long long int phone_number;
     struct company company;
 };
