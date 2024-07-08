@@ -15,18 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source.c">
+    <ClCompile Include="source.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="utilities.c">
+    <ClCompile Include="utilities.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="datastructures.h">
+    <ClInclude Include="constants.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="constants.h">
+    <ClInclude Include="datastructures.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
