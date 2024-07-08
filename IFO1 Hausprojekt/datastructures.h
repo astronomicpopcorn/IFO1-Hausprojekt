@@ -1,3 +1,4 @@
+#pragma once
 #include "constants.h"
 
 typedef struct address {
@@ -5,20 +6,20 @@ typedef struct address {
     int house_number;
     int postal_code;
     char city[city_name_length];
-}
+};
 
 typedef struct contact_person {
     char first_name[first_name_length];
     char surname[surname_length];
     unsigned long long int phone_number;
     char email[email_length];
-}
+};
 
 typedef struct company {
     char name[company_name_length];
-    address address;
-    contact_person contact_person;
-}
+    struct address address;
+    struct contact_person contact_person;
+};
 
 typedef struct student {
     bool is_empty = true;
@@ -27,7 +28,7 @@ typedef struct student {
     char surname[surname_length];
     unsigned short int enrollment_year;
     char course_of_study[course_of_study_length];
-    address home_address;
+    struct home_address;
     unsigned long int phone_number;
-    company company;
-}
+    struct company company;
+};
