@@ -34,6 +34,14 @@ void main() {
 
     printf("%s", students[0].company.contact_person.email);
 
-
+    
+    //test search:
+    char temp_query[64];
+    scanf("%[^\n]s", temp_query);
+    for(int i = 0; i < dataset_size; i++){
+        if(search_datapoint(students[i], temp_query)){
+            printf("%3i: %s %s\n", i, students[i].first_name, students[i].surname);
+        }
+    }
     getchar();
 }
