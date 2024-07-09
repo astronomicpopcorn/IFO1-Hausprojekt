@@ -2,6 +2,7 @@
 #include "constants.h"
 #include <stdio.h>
 #include <string.h>
+#include <windows.h>
 
 void generate_company_email(char email_destination[email_length], char first_name[first_name_length], char surname[surname_length], char company_name[company_name_length]) {
     strcpy(email_destination, "");
@@ -73,7 +74,53 @@ bool search_datapoint(struct student *student, char _query[query_length]){
     //strstr() != NULL;
 }
 
+bool get_window_position(Vector2D *topleft, Vector2D *size){
+    HWND console_window = GetConsoleWindow();
+    if(console_window == NULL){
+        return false;
+    }
+    RECT window_rect;
+    if(GetWindowrect(console_window, &window_rect)){
+        topleft.x = window_rect.left;
+        topleft.y = window_rect.top;
+        size.x = window_rect.right - window_rect.left;
+        size.y = window_rect.bottom - window_rect.top;
+        return true;
+    }
+    return false;
+} 
 
+Vector2D get_mouse_position(){
+    Vector2D result;
+    result.x = -1;
+    result.y = -1;
+    POINT curser_position;
+    if(GetCursorPos(&curser_position)){
+        result.x = curser_position.x;
+        result.y = curser_position.y;
+    }
+    return result;
+}
+
+Vector2D get_mouse_on_window(){
+    Vector2D result;
+    Vector2D window_position, window_size, mouse_position;
+    mouse_position = get_mouse_position();
+    if(!get_window_position(&window_position, &window_size) || (mouse_position.x == -1 && mouse_position.y == -1)){
+        result.x = -1;
+        result.y = -1;
+        return result;
+    }
+    result.x = mouse_position.x - window_position.x;
+    result.y = mouse_position.y - window_position.y;
+    if(result.x < 1 || result.y >= window_size.x){
+        result.x = -1;
+    }
+    if(result.y < 1 || result.y >= window_size.y){
+        result.y = -1;
+    }
+    return result;
+}
 
 
 
