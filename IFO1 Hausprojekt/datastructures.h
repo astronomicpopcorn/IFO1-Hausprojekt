@@ -4,7 +4,7 @@
 
 typedef struct address {
     char street[street_name_length];
-    int house_number;
+    char house_number[house_number_length];
     int postal_code;
     char city[city_name_length];
 };
