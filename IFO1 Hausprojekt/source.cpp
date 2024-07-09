@@ -34,6 +34,24 @@ void main() {
 
     printf("%s", students[0].company.contact_person.email);
 
+    strcpy(students[1].first_name, "Ole");
+    strcpy(students[1].surname, "Spindelndreher");
+    strcpy(students[2].first_name, "Jill Kendra");
+    strcpy(students[2].surname, "Hermann");
+    strcpy(students[3].first_name, "Max");
+    strcpy(students[3].surname, "Mustermann");
+    strcpy(students[4].first_name, "Timon");
+    strcpy(students[4].surname, "Trompete");
+    strcpy(students[5].first_name, "Alexander");
+    strcpy(students[5].surname, "Müller");
+    strcpy(students[6].first_name, "Jean Jaques");
+    strcpy(students[6].surname, "Jodelmeister");
+    strcpy(students[7].first_name, "Florian");
+    strcpy(students[7].surname, "Flöte");
+    strcpy(students[8].first_name, "Martin");
+    strcpy(students[8].surname, "von Margarine");
+    strcpy(students[9].first_name, "Gerald");
+    strcpy(students[9].surname, "Gulasch");
     
     //test search:
     char temp_query[64];
