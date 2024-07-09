@@ -56,10 +56,18 @@ void main() {
     //test search:
     char temp_query[64];
     scanf("%[^\n]s", temp_query);
+    getchar();
     for(int i = 0; i < dataset_size; i++){
         if(search_datapoint(students[i], temp_query)){
             printf("%3i: %s %s\n", i, students[i].first_name, students[i].surname);
         }
     }
+    getchar();
+    while(true){
+        Vector2D pos = get_mouse-on_window();
+        printf("\033[H%4i %4i", pos.x, pos.y);
+    }
+
+
     getchar();
 }
