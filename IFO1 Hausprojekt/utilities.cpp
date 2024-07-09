@@ -21,15 +21,19 @@ void generate_hs21_email(char email_destination[email_length], char first_name[f
     strcat(email_destination, "@stud.hs21.de");
 }
 
-bool search_datapoint(struct student *student, char query[query_length]){
+//search a single datapoint for any match with a query. query will be split by whitespace and punctuation (Will return true if query is "Nick Heinz Olaf" and searched student contains "Nick" anywhere)
+//TODO: Make case insensitive
+bool search_datapoint(struct student *student, char _query[query_length]){
     if(student.is_empty){
         return false;
     }
+    char query[query_length];
+    strcpy(query, _query); //to not modify original query string
     bool match = false;
     char stringified_number[stringified_number_length];
     char *token;
-    token = strtok(query, " ,.");
-    while(token != NULL && !match){
+    token = strtok(query, " ,.");      //split query into tokens
+    while(token != NULL && !match){    //loop over all tokens while no match has been found
         //student base data
         sprintf(stringified_number, "%i", student.student_number);
         match = match || strstr(stringified_number, token) != NULL;
