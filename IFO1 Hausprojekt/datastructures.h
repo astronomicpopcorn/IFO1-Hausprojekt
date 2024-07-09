@@ -2,6 +2,11 @@
 
 #include "constants.h"
 
+typedef struct cursor {
+    int x;
+    int y;
+}
+
 typedef struct address {
     char street[street_name_length];
     char house_number[house_number_length];
