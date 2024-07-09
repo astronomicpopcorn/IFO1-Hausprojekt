@@ -2,7 +2,7 @@
 
 #include "constants.h"
 
-typedef struct cursor {
+typedef struct vector2D {
     int x;
     int y;
 }
