@@ -14,4 +14,4 @@ const unsigned short int email_length = first_name_length + surname_length + com
 
 
 const unsigned short int query_length = 64;
-const unsigned short int stringified_number_length = 16;
+const unsigned short int stringified_number_length = 22;
