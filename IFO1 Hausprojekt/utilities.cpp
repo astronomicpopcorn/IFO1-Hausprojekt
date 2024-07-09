@@ -113,10 +113,10 @@ Vector2D get_mouse_on_window(){
     }
     result.x = mouse_position.x - window_position.x;
     result.y = mouse_position.y - window_position.y;
-    if(result.x < 1 || result.y >= window_size.x){
+    if(result.x < 0 || result.y >= window_size.x){
         result.x = -1;
     }
-    if(result.y < 1 || result.y >= window_size.y){
+    if(result.y < 0 || result.y >= window_size.y){
         result.y = -1;
     }
     return result;
