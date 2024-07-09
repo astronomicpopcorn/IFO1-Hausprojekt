@@ -1,5 +1,7 @@
 #pragma once
 
+const unsigned short int dataset_size = 150;
+
 const unsigned short int first_name_length = 32;
 const unsigned short int surname_length = 32;
 const unsigned short int company_name_length = 32;
