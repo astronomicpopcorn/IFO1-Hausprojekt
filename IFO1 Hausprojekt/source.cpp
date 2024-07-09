@@ -7,31 +7,32 @@
 
 
 void main() {
-    student student1;
-    strcpy(student1.first_name, "Nick");
-    strcpy(student1.surname, "Winter");
-    strcpy(student1.course_of_study, "Mechatronik");
-    student1.phone_number = 4915151727981;
-    student1.enrollment_year = 2023;
-    student1.student_number = 202050;
-    strcpy(student1.home_address.city, "Buxtehude");
-    strcpy(student1.home_address.street, "Estebrügger Straße");
-    student1.home_address.house_number = 31;
-    student1.home_address.postal_code = 21614;
-    strcpy(student1.company.contact_person.first_name, "Rafael");
-    strcpy(student1.company.contact_person.surname, "Götzen");
-    strcpy(student1.company.name, "Airbus");
+    student students[dataset_size];
+    
+    strcpy(students[0].first_name, "Nick");
+    strcpy(students[0].surname, "Winter");
+    strcpy(students[0].course_of_study, "Mechatronik");
+    students[0].phone_number = 4915151727981;
+    students[0].enrollment_year = 2023;
+    students[0].student_number = 202050;
+    strcpy(students[0].home_address.city, "Buxtehude");
+    strcpy(students[0].home_address.street, "EstebrÃ¼gger StraÃŸe");
+    students[0].home_address.house_number = 31;
+    students[0].home_address.postal_code = 21614;
+    strcpy(students[0].company.contact_person.first_name, "Rafael");
+    strcpy(students[0].company.contact_person.surname, "GÃ¶tzen");
+    strcpy(students[0].company.name, "Airbus");
 
-    generate_company_email(student1.company.contact_person.email, student1.company.contact_person.first_name, student1.company.contact_person.surname, student1.company.name);
-    generate_hs21_email(student1.email, student1.first_name, student1.surname);
+    generate_company_email(students[0].company.contact_person.email, students[0].company.contact_person.first_name, students[0].company.contact_person.surname, students[0].company.name);
+    generate_hs21_email(students[0].email, students[0].first_name, students[0].surname);
 
-    student1.company.contact_person.phone_number = 1234567890;
-    strcpy(student1.company.address.city, "Hamburg");
-    strcpy(student1.company.address.street, "Kreetslag");
-    student1.company.address.house_number = 10;
-    student1.company.address.postal_code = 21129;
+    students[0].company.contact_person.phone_number = 1234567890;
+    strcpy(students[0].company.address.city, "Hamburg");
+    strcpy(students[0].company.address.street, "Kreetslag");
+    students[0].company.address.house_number = 10;
+    students[0].company.address.postal_code = 21129;
 
-    printf("%s", student1.company.contact_person.email);
+    printf("%s", students[0].company.contact_person.email);
 
 
     getchar();
