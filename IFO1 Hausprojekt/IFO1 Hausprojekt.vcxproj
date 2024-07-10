@@ -128,13 +128,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="datamodification.cpp" />
+    <ClCompile Include="searching.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="windowinteractions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h" />
+    <ClInclude Include="datamodification.h" />
     <ClInclude Include="datastructures.h" />
+    <ClInclude Include="searching.h" />
     <ClInclude Include="utilities.h" />
+    <ClInclude Include="windowinteractions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

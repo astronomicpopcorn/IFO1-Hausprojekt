@@ -28,7 +28,7 @@ typedef struct company {
 };
 
 typedef struct student {
-    bool is_empty = false; //SHOULD BE SET TO TRUE!!!!!
+    bool is_empty = true;
     char student_number[student_number_length] = "\0";
     char first_name[first_name_length] = "\0";
     char surname[surname_length] = "\0";

@@ -6,7 +6,9 @@
 #include "datastructures.h"
 #include "constants.h"
 #include "utilities.h"
-
+#include "datamodification.h"
+#include "windowinteractions.h"
+#include "searching.h"
 
 void main() {
 
@@ -95,86 +97,104 @@ void main() {
     strcpy(students[5].first_name, "Alexander");
     strcpy(students[5].surname, "Müller");
     strcpy(students[6].first_name, "Jean Jaques");
-    strcpy(students[6].surname, "Jodelmeister");
+    strcpy(students[6].surname, "Mustermann");
     strcpy(students[7].first_name, "Florian");
     strcpy(students[7].surname, "Flöte");
     strcpy(students[8].first_name, "Martin");
     strcpy(students[8].surname, "von Margarine");
-    strcpy(students[9].first_name, "Gerald");
-    strcpy(students[9].surname, "Gulasch");
+    strcpy(students[9].first_name, "Max");
+    strcpy(students[9].surname, "Krombacher");
     
-
-
-
-    //test non-waiting typing
-    char c = 0;
-    char buff[100] = "\0";
-    int ptr = 0;
-    int ctr = 0;
-    while(c != '\n' && c != '\r'){
-        if(kbhit()){
-            c = getch();
-            if(c == 8 && ptr > 0){
-                ptr--;
-                buff[ptr] = '\0';
-            }
-            else if(c != 8){
-                buff[ptr] = c;
-                ptr++;
-                buff[ptr] = '\0';
-            }
-        }
-        printf("\033[H%s\n%i", buff, ctr);
-        ctr++;
+    for (int i = 0; i < 10; i++) {
+        students[i].is_empty = false;
     }
 
+    students[12] = enter_datapoint();
 
-    //mouse interactions: getAsyncKeyState(somethin' magic);
+    //test non-waiting typing - WORKS!
+    //char c = 0;
+    //char buff[100] = "\0";
+    //int ptr = 0;
+    //int ctr = 0;
+    //while(c != '\n' && c != '\r'){
+    //    while(kbhit()){
+    //        c = getch();
+    //        if(c == 8 && ptr > 0){
+    //            ptr--;
+    //            buff[ptr] = '\0';
+    //        }
+    //        else if(c != 8){
+    //            buff[ptr] = c;
+    //            ptr++;
+    //            buff[ptr] = '\0';
+    //        }
+    //    }
+    //    printf("\033[2J\033[H%s\n%i", buff, ctr);
+    //    ctr++;
+    //    Sleep(500);
+    //}
+
+
+    //mouse interactions: getAsyncKeyState(somethin' magic); - WORKS!
+    //while (true) {
+    //    if (GetAsyncKeyState(VK_LBUTTON)) {
+    //        printf("%s", "\033[H:)");
+    //    }
+    //    else {
+    //        printf("%s", "\033[H  ");
+    //    }
+    //}
+
+
+
+
 
     //DYNAMIC SEARCHING. 
     //Put into function that returns array of indexes
 
-    //char t = '\0';
-    //char buffer[100] = "\0";
-    //int buffer_length = 0;
-    //while (t != '\r') {
-    //    t = getch();
-    //    if (t == 8 && buffer_length > 0) {
-    //        buffer[buffer_length - 1] = '\0';
-    //        buffer_length--;
-    //    }
-    //    else if (t != 8){
-    //        buffer[buffer_length] = t;
-    //        buffer[buffer_length + 1] = '\0';
-    //        buffer_length++;
-    //    }
-    //    printf("%s", "\033[2J\033[H");
-    //    printf("%s\n", buffer);
-    //    for(int i = 0; i < dataset_size; i++){
-    //        if(search_datapoint(&students[i], buffer)){
-    //            printf("%3i: %s %s\n", i, students[i].first_name, students[i].surname);
-    //        }
-    //    }
-    //}
+    char t = '\0';
+    char buffer[100] = "\0";
+    int buffer_length = 0;
+    while (t != '\r') {
+        t = getch();
+        if (t == 8 && buffer_length > 0) {
+            buffer[buffer_length - 1] = '\0';
+            buffer_length--;
+        }
+        else if (t != 8){
+            buffer[buffer_length] = t;
+            buffer[buffer_length + 1] = '\0';
+            buffer_length++;
+        }
+        printf("%s", "\033[2J\033[H");
+        printf("> %s|\n", buffer);
+        for(int i = 0; i < dataset_size; i++){
+            if(search_datapoint(&students[i], buffer)){
+                printf("%3i: %s %s\n", i, students[i].first_name, students[i].surname);
+            }
+        }
+    }
 
 
 
     // THIS PUTS THE CURSOR ON DA GODDAMN SCREEN
     // put it into a function. please.
 
-    //while(true){
+    //while (true) {
     //    Vector2D pos = get_mouse_on_window();
     //    Vector2D consolesize = get_console_size();
     //    Vector2D topleft, size;
     //    get_window_position(&topleft, &size);
-    //    pos.x = pos.x / (size.x / consolesize.x);
-    //    pos.y = pos.y / (size.y / consolesize.y);
+    //    consolesize.y += 2;
+    //    pos.y += 10;
+    //    pos.x = pos.x / (size.x / consolesize.x) - 1;
+    //    pos.y = pos.y / (size.y / consolesize.y) - 2;
     //    char screenbuffer[200*200];
     //    int count = 0;
     //    for (int y = 0; y < consolesize.y; y++) {
     //        for (int x = 0; x < consolesize.x; x++) {
     //            if (y == pos.y && x == pos.x) {
-    //                screenbuffer[count] = '#';
+    //                screenbuffer[count] = 'O';
     //            }
     //            else {
     //                screenbuffer[count] = ' ';

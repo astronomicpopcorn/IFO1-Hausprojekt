@@ -21,6 +21,15 @@
     <ClCompile Include="utilities.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="searching.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="windowinteractions.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="datamodification.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -30,6 +39,15 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="utilities.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="searching.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="windowinteractions.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="datamodification.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
