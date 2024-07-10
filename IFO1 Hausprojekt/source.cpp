@@ -10,8 +10,8 @@
 
 void main() {
 
-
-    student students[dataset_size];
+    short unsigned int matching_indices[dataset_size]; //used for search function
+    student students[dataset_size]; //main array
     
     strcpy(students[0].first_name, "Nick");
     strcpy(students[0].surname, "Winter");
