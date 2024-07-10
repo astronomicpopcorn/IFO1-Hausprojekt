@@ -144,6 +144,16 @@ student enter_datapoint(){
 
 
 
+void lowercase_string(char *ptr){
+    while (*ptr) {
+        *ptr = tolower((unsigned char) *ptr);
+        ptr++;
+    }
+}
+
+
+
+
 
 
 
