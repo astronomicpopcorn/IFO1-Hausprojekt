@@ -75,15 +75,26 @@ bool search_datapoint(struct student *student, char _query[query_length]){
 }
 
 
-
-
-
-
-
-
-int map(int value, int sourcerange_min, int sourcerange_max, int targetrange_min, int targetrange_max) {
-    return ((targetrange_max - targetrange_min) / (sourcerange_max - sourcerange_min)) * value - sourcerange_min * ((targetrange_max - targetrange_min) / (sourcerange_max - sourcerange_min)) + targetrange_min;
+int search_dataset(student students[dataset_size], char query[query_length], list_of_matching_indices[dataset_size]){
+    int num_of_matches = 0;
+    int p = 0; //points to position in list_of_matching_indices
+    for(int i = 0; i < dataset_size; i++){
+        if(search_datapoint(&students[i], query){
+            list_of_matching_indices[p] = i;
+            p++;
+            num_of_matches++;
+        }
+    }
+    while(p < dataste_size){
+        list_of_matching_indices[p] = -1;
+        p++;
+    }
+    return num_of_matches;
 }
+
+
+
+
 
 
 
