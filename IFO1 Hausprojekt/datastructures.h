@@ -10,14 +10,14 @@ typedef struct Vector2D {
 typedef struct address {
     char street[street_name_length] = "\0";
     char house_number[house_number_length] = "\0";
-    int postal_code;
+    char postal_code[postal_code_length] = "\0";
     char city[city_name_length] = "\0";
 };
 
 typedef struct contact_person {
     char first_name[first_name_length] = "\0";
     char surname[surname_length] = "\0";
-    unsigned long long int phone_number;
+    char phone_number[phone_number_length] = "\0";
     char email[email_length] = "\0";
 };
 
@@ -29,13 +29,13 @@ typedef struct company {
 
 typedef struct student {
     bool is_empty = false;
-    unsigned int student_number;
+    char student_number[student_number_length] = "\0";
     char first_name[first_name_length] = "\0";
     char surname[surname_length] = "\0";
     char email[email_length] = "\0";
-    unsigned short int enrollment_year;
+    char enrollment_year[enrollment_year_length] = "\0";
     char course_of_study[course_of_study_length] = "\0";
     struct address home_address;
-    unsigned long long int phone_number;
+    char phone_number[phone_number_length] = "\0";
     struct company company;
 };
