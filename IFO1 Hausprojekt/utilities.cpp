@@ -24,6 +24,7 @@ void generate_hs21_email(char email_destination[email_length], char first_name[f
 
 //search a single datapoint for any match with a query. query will be split by whitespace and punctuation (Will return true if query is "Nick Heinz Olaf" and searched student contains "Nick" anywhere)
 //TODO: Make case insensitive
+// should use AND logic for tokens instead of OR (untested)
 bool search_datapoint(struct student *student, char _query[query_length]){
     if(student->is_empty){
         return false;
@@ -31,9 +32,11 @@ bool search_datapoint(struct student *student, char _query[query_length]){
     char query[query_length];
     strcpy(query, _query); //to not modify original query string
     bool match = false;
+    bool all_match = true;
     char *token;
     token = strtok(query, " ,.");      //split query into tokens
-    while(token != NULL && !match){    //loop over all tokens while no match has been found
+    while(token != NULL){    //loop over all tokens
+        match = false;
         //*student base data
         match = match || strstr(student->student_number, token) != NULL;
         match = match || strstr(student->first_name, token) != NULL;
@@ -62,8 +65,9 @@ bool search_datapoint(struct student *student, char _query[query_length]){
 
         //Update Token
         token = strtok(NULL, " ,.");
+        all_match = all_match && match;
     }
-    return match;
+    return all_match;
     //strstr() != NULL;
 }
 
