@@ -86,6 +86,58 @@ int search_dataset(student students[dataset_size], char query[query_length], lis
 }
 
 
+// very simple function to get a single datapoint. no fancy UI.
+//quick and dirty: max string length not fixed!!!
+student enter_datapoint(){
+    student student;
+    
+    printf("%s", "Entering new student.\nE-Mail addresses will be automatically generated.\nFirst name: ");
+    scanf("%[^\n]s", &student.first_name);
+    printf("%s", "Last name: ");
+    scanf("%[^\n]s", &student.surname);
+    printf("%s", "Student number: ");
+    scanf("%[^\n]s", &student.student_number);
+    printf("%s", "Course of Study: ");
+    scanf("%[^\n]s", &student.course_of_study);
+    printf("%s", "Enrollment year: ");
+    scanf("%[^\n]s", &student.enrollment_year);
+    printf("%s", "Phone number: ");
+    scanf("%[^\n]s", &student.phone_number);
+    
+    printf("\n%s", "\nAddress of student\nCity: ");
+    scanf("%[^\n]s", &student.home_address.city);
+    printf("%s", "Postal code: ");
+    scanf("%[^\n]s", &student.home_address.postal_code);
+    printf("%s", "Street: ");
+    scanf("%[^\n]s", &student.home_address.street);
+    printf("%s", "House number: ");
+    scanf("%[^\n]s", &student.home_address.house_number);
+    
+    printf("\n%s", "\nCompany name: ");
+    scanf("%[^\n]s", &student.company.name);
+    printf("%s", "Address of company\nCity: ");
+    scanf("%[^\n]s", &student.company.address.city);
+    printf("%s", "Postal code: ");
+    scanf("%[^\n]s", &student.company.address.postal_code);
+    printf("%s", "Street: ");
+    scanf("%[^\n]s", &student.company.address.street);
+    printf("%s", "House number: ");
+    scanf("%[^\n]s", &student.company.address.house_number);
+    
+    printf("\n%s", "\nContact person information\nFirst name: ");
+    scanf("%[^\n]s", &student.company.contact_person.first_name);
+    printf("%s", "Last Name: ");
+    scanf("%[^\n]s", &student.company.contact_person.surname);
+    printf("%s", "Phone number: ");
+    scanf("%[^\n]s", &student.company.contact_person.phone_number);
+
+    generate_hs21_email(student.email, student.first_name, student.surname);
+    generate_company_email(student.company.contact_person.email, student.company.contact_person.first_name, student.company.contact_person.surname, student.company.name);
+    
+    student.is_empty = false;
+
+    return student;
+}
 
 
 
