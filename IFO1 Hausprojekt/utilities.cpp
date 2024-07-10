@@ -110,7 +110,7 @@ bool get_window_position(Vector2D *topleft, Vector2D *size){
         return false;
     }
     RECT window_rect;
-    if(GetWindowRect(console_window, &window_rect)){
+    if(GetClientRect(console_window, &window_rect)){ //GetWindowRect() returns pos of whole window including shadow. GetClientRect() should only return the usable part
         topleft->x = window_rect.left;
         topleft->y = window_rect.top;
         size->x = window_rect.right - window_rect.left;
