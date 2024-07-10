@@ -105,6 +105,32 @@ void main() {
     
 
 
+
+    //test non-waiting typing
+    char c = 0;
+    char buff[100] = "\0";
+    int ptr = 0;
+    int ctr = 0;
+    while(c != '\n' && c != '\r'){
+        if(kbhit()){
+            c = getch();
+            if(c == 8 && ptr > 0){
+                ptr--;
+                buff[ptr] = '\0';
+            }
+            else if(c != 8){
+                buff[ptr] = c;
+                ptr++;
+                buff[ptr] = '\0';
+            }
+        }
+        printf("\033[H%s\n%i", buff, ctr);
+        ctr++;
+    }
+
+
+    //mouse interactions: getAsyncKeyState(somethin' magic);
+
     //DYNAMIC SEARCHING. 
     //Put into function that returns array of indexes
 
