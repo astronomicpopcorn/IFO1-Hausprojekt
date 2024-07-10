@@ -162,7 +162,15 @@ Vector2D get_mouse_on_window(){
     return result;
 }
 
-
+Vector2D get_mouse_on_console(){
+    Vector2D pos = get_mouse_on_window();
+    Vector2D consolesize = get_console_size();
+    Vector2D topleft, size;
+    get_window_position(&topleft, &size);
+    pos.x = pos.x / (size.x / consolesize.x);
+    pos.y = pos.y / (size.y / consolesize.y);
+    return pos;
+}
 
 
 
