@@ -11,3 +11,6 @@ void lowercase_string(char *ptr){
     }
 }
 
+bool is_mouse_pressed(){
+    return GetAsyncKeyState(VK_LBUTTON) != 0;
+}
