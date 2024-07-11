@@ -109,7 +109,14 @@ void main() {
         students[i].is_empty = false;
     }
 
-    students[12] = enter_datapoint();
+    //students[10] = enter_datapoint();
+
+    //int k = 0;
+    //while (!students[k].is_empty) {
+    //    print_student(students[k]);
+    //    printf("\n\nIndex %i:\n\n", k);
+    //    k++;
+    //}
 
     //test non-waiting typing - WORKS!
     //char c = 0;
@@ -155,25 +162,32 @@ void main() {
     char t = '\0';
     char buffer[100] = "\0";
     int buffer_length = 0;
-    while (t != '\r') {
+    int num_results;
+    printf("> %s|\n", buffer);
+    do {
         t = getch();
         if (t == 8 && buffer_length > 0) {
             buffer[buffer_length - 1] = '\0';
             buffer_length--;
         }
-        else if (t != 8){
+        else if (t != 8 && t != '\r' && t != '\n') {
             buffer[buffer_length] = t;
             buffer[buffer_length + 1] = '\0';
             buffer_length++;
         }
         printf("%s", "\033[2J\033[H");
         printf("> %s|\n", buffer);
-        for(int i = 0; i < dataset_size; i++){
-            if(search_datapoint(&students[i], buffer)){
-                printf("%3i: %s %s\n", i, students[i].first_name, students[i].surname);
-            }
+        num_results = search_dataset(students, buffer, matching_indices);
+        for(int i = 0; i < num_results; i++){
+            printf("%3i: %s %s\n", i, students[matching_indices[i]].first_name, students[matching_indices[i]].surname);
         }
+    } while (t != '\r');
+    printf("%s", "\033[2J\033[H");
+    for (int i = 0; i < num_results; i++) {
+        printf("%s", "\n--------------------------------------------------------\n\n");
+        print_student(students[matching_indices[i]]);
     }
+    getchar();
 
 
 
