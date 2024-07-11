@@ -2,7 +2,7 @@
 #include "constants.h"
 
 #include <ctype.h>
-
+#include <windows.h>
 
 void lowercase_string(char *ptr){
     while (*ptr) {
