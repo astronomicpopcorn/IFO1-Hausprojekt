@@ -18,7 +18,7 @@ bool is_mouse_pressed(){
 
 
 void print_student(student student){
-    printf("%s %s\n", student.first_name, student.surname);
+    printf("%s %s\n", student.first_name, student.last_name);
     printf("(%s, Jahrgang %s)\n", student.course_of_study, student.enrollment_year);
     printf("%s\n", student.email);
     printf("%s\n", student.phone_number);
@@ -28,7 +28,7 @@ void print_student(student student){
     printf("%s %s\n", student.company.address.street, student.company.address.house_number);
     printf("%s %s\n", student.company.address.postal_code, student.company.address.city);
     printf("Kontaktperson:\n");
-    printf("%s %s\n", student.company.contact_person.first_name, student.company.contact_person.surname);
+    printf("%s %s\n", student.company.contact_person.first_name, student.company.contact_person.last_name);
     printf("%s\n", student.company.contact_person.email);
     printf("%s\n", student.company.contact_person.phone_number);
 }
