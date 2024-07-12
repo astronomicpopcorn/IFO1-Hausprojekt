@@ -16,7 +16,7 @@ void main() {
     student students[dataset_size]; //main array
     
     strcpy(students[0].first_name, "Nick");
-    strcpy(students[0].surname, "Winter");
+    strcpy(students[0].last_name, "Winter");
     strcpy(students[0].course_of_study, "Mechatronik");
     strcpy(students[0].phone_number, "4915151727981");
     strcpy(students[0].enrollment_year, "2023");
@@ -26,11 +26,11 @@ void main() {
     strcpy(students[0].home_address.house_number, "31A");
     strcpy(students[0].home_address.postal_code, "21614");
     strcpy(students[0].company.contact_person.first_name, "Rafael");
-    strcpy(students[0].company.contact_person.surname, "Götzen");
+    strcpy(students[0].company.contact_person.last_name, "Götzen");
     strcpy(students[0].company.name, "Airbus");
 
-    generate_company_email(students[0].company.contact_person.email, students[0].company.contact_person.first_name, students[0].company.contact_person.surname, students[0].company.name);
-    generate_hs21_email(students[0].email, students[0].first_name, students[0].surname);
+    generate_company_email(students[0].company.contact_person.email, students[0].company.contact_person.first_name, students[0].company.contact_person.last_name, students[0].company.name);
+    generate_hs21_email(students[0].email, students[0].first_name, students[0].last_name);
 
     strcpy(students[0].company.contact_person.phone_number, "1234567890");
     strcpy(students[0].company.address.city, "Hamburg");
@@ -41,7 +41,7 @@ void main() {
 
 
     strcpy(students[1].first_name, "Ole");
-    strcpy(students[1].surname, "Spindelndreher");
+    strcpy(students[1].last_name, "Spindelndreher");
     strcpy(students[1].course_of_study, "Mechatronik");
     strcpy(students[1].phone_number, "4915151727981");
     strcpy(students[1].enrollment_year, "2023");
@@ -51,11 +51,11 @@ void main() {
     strcpy(students[1].home_address.house_number, "76");
     strcpy(students[1].home_address.postal_code, "21614");
     strcpy(students[1].company.contact_person.first_name, "Martin");
-    strcpy(students[1].company.contact_person.surname, "Möhre");
+    strcpy(students[1].company.contact_person.last_name, "Möhre");
     strcpy(students[1].company.name, "Airbus");
 
-    generate_company_email(students[1].company.contact_person.email, students[1].company.contact_person.first_name, students[1].company.contact_person.surname, students[1].company.name);
-    generate_hs21_email(students[1].email, students[1].first_name, students[1].surname);
+    generate_company_email(students[1].company.contact_person.email, students[1].company.contact_person.first_name, students[1].company.contact_person.last_name, students[1].company.name);
+    generate_hs21_email(students[1].email, students[1].first_name, students[1].last_name);
 
     strcpy(students[1].company.contact_person.phone_number, "739246248");
     strcpy(students[1].company.address.city, "Hamburg");
@@ -66,7 +66,7 @@ void main() {
 
 
     strcpy(students[2].first_name, "Jill Kendra");
-    strcpy(students[2].surname, "Hermann");
+    strcpy(students[2].last_name, "Hermann");
     strcpy(students[2].course_of_study, "Logistik");
     strcpy(students[2].phone_number, "4915151727981");
     strcpy(students[2].enrollment_year, "2023");
@@ -76,11 +76,11 @@ void main() {
     strcpy(students[2].home_address.house_number, "12");
     strcpy(students[2].home_address.postal_code, "21614");
     strcpy(students[2].company.contact_person.first_name, "Hans");
-    strcpy(students[2].company.contact_person.surname, "Heinrich");
+    strcpy(students[2].company.contact_person.last_name, "Heinrich");
     strcpy(students[2].company.name, "Lufthansa");
 
-    generate_company_email(students[2].company.contact_person.email, students[2].company.contact_person.first_name, students[2].company.contact_person.surname, students[2].company.name);
-    generate_hs21_email(students[2].email, students[2].first_name, students[2].surname);
+    generate_company_email(students[2].company.contact_person.email, students[2].company.contact_person.first_name, students[2].company.contact_person.last_name, students[2].company.name);
+    generate_hs21_email(students[2].email, students[2].first_name, students[2].last_name);
 
     strcpy(students[2].company.contact_person.phone_number, "8597243543");
     strcpy(students[2].company.address.city, "Hamburg");
@@ -91,19 +91,19 @@ void main() {
 
 
     strcpy(students[3].first_name, "Max");
-    strcpy(students[3].surname, "Mustermann");
+    strcpy(students[3].last_name, "Mustermann");
     strcpy(students[4].first_name, "Timon");
-    strcpy(students[4].surname, "Trompete");
+    strcpy(students[4].last_name, "Trompete");
     strcpy(students[5].first_name, "Alexander");
-    strcpy(students[5].surname, "Müller");
+    strcpy(students[5].last_name, "Müller");
     strcpy(students[6].first_name, "Jean Jaques");
-    strcpy(students[6].surname, "Mustermann");
+    strcpy(students[6].last_name, "Mustermann");
     strcpy(students[7].first_name, "Florian");
-    strcpy(students[7].surname, "Flöte");
+    strcpy(students[7].last_name, "Flöte");
     strcpy(students[8].first_name, "Martin");
-    strcpy(students[8].surname, "von Margarine");
+    strcpy(students[8].last_name, "von Margarine");
     strcpy(students[9].first_name, "Max");
-    strcpy(students[9].surname, "Krombacher");
+    strcpy(students[9].last_name, "Krombacher");
     
     for (int i = 0; i < 10; i++) {
         students[i].is_empty = false;
@@ -179,7 +179,7 @@ void main() {
         printf("> %s|\n", buffer);
         num_results = search_dataset(students, buffer, matching_indices);
         for(int i = 0; i < num_results; i++){
-            printf("%3i: %s %s\n", i, students[matching_indices[i]].first_name, students[matching_indices[i]].surname);
+            printf("%3i: %s %s\n", i, students[matching_indices[i]].first_name, students[matching_indices[i]].last_name);
         }
     } while (t != '\r');
     printf("%s", "\033[2J\033[H");
