@@ -25,7 +25,7 @@ bool search_datapoint(struct student *student, char _query[query_length]) {
         //*student base data
         match = match || strstr(student->student_number, token) != NULL;
         match = match || strstr(student->first_name, token) != NULL;
-        match = match || strstr(student->surname, token) != NULL;
+        match = match || strstr(student->last_name, token) != NULL;
         match = match || strstr(student->email, token) != NULL;
         match = match || strstr(student->enrollment_year, token) != NULL;
         match = match || strstr(student->course_of_study, token) != NULL;
@@ -44,7 +44,7 @@ bool search_datapoint(struct student *student, char _query[query_length]) {
         match = match || strstr(student->company.address.postal_code, token) != NULL;
         //company contact_person
         match = match || strstr(student->company.contact_person.first_name, token) != NULL;
-        match = match || strstr(student->company.contact_person.surname, token) != NULL;
+        match = match || strstr(student->company.contact_person.last_name, token) != NULL;
         match = match || strstr(student->company.contact_person.email, token) != NULL;
         match = match || strstr(student->company.contact_person.phone_number, token) != NULL;
 
