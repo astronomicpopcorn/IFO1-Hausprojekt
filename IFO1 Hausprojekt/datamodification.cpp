@@ -4,21 +4,21 @@
 #include <stdio.h>
 #include <string.h>
 
-void generate_company_email(char email_destination[email_length], char first_name[first_name_length], char surname[surname_length], char company_name[company_name_length]) {
+void generate_company_email(char email_destination[email_length], char first_name[first_name_length], char last_name[last_name_length], char company_name[company_name_length]) {
     strcpy(email_destination, "");
     strcat(email_destination, first_name);
     strcat(email_destination, ".");
-    strcat(email_destination, surname);
+    strcat(email_destination, last_name);
     strcat(email_destination, "@");
     strcat(email_destination, company_name);
     strcat(email_destination, ".de");
 }
 
-void generate_hs21_email(char email_destination[email_length], char first_name[first_name_length], char surname[surname_length]) {
+void generate_hs21_email(char email_destination[email_length], char first_name[first_name_length], char last_name[last_name_length]) {
     strcpy(email_destination, "");
     strcat(email_destination, first_name);
     strcat(email_destination, ".");
-    strcat(email_destination, surname);
+    strcat(email_destination, last_name);
     strcat(email_destination, "@stud.hs21.de");
 }
 
@@ -37,7 +37,7 @@ student enter_datapoint() {
     scanf("%[^\n]s", &student.first_name);
     getchar();
     printf("%s", "Last name: ");
-    scanf("%[^\n]s", &student.surname);
+    scanf("%[^\n]s", &student.last_name);
     getchar();
     printf("%s", "Student number: ");
     scanf("%[^\n]s", &student.student_number);
@@ -85,14 +85,14 @@ student enter_datapoint() {
     scanf("%[^\n]s", &student.company.contact_person.first_name);
     getchar();
     printf("%s", "Last Name: ");
-    scanf("%[^\n]s", &student.company.contact_person.surname);
+    scanf("%[^\n]s", &student.company.contact_person.last_name);
     getchar();
     printf("%s", "Phone number: ");
     scanf("%[^\n]s", &student.company.contact_person.phone_number);
     getchar();
 
-    generate_hs21_email(student.email, student.first_name, student.surname);
-    generate_company_email(student.company.contact_person.email, student.company.contact_person.first_name, student.company.contact_person.surname, student.company.name);
+    generate_hs21_email(student.email, student.first_name, student.last_name);
+    generate_company_email(student.company.contact_person.email, student.company.contact_person.first_name, student.company.contact_person.last_name, student.company.name);
 
     student.is_empty = false;
 
