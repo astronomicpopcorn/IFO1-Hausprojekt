@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <windows.h>
 #include <stdio.h>
+#include <string.h>
 
 void lowercase_string(char *ptr){
     while (*ptr) {
@@ -55,3 +56,18 @@ bool load_file(student list[dataset_size], const char* filename){
     return true;
 }
 
+void add_file_extension(char filename[filename_length]){
+    if(filename[0] == '\0'){
+        strcpy(filename, "unnamed");
+    }
+    int len = strlen(filename);
+    if(len < filename_length - 3){
+        strcat(filename, ".db");
+    }
+    else{
+        filename[filename_length - 4] = '.';
+        filename[filename_length - 3] = 'd';
+        filename[filename_length - 2] = 'b';
+        filename[filename_length - 1] = '\0';
+    }
+}
