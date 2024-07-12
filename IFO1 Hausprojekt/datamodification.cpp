@@ -22,6 +22,12 @@ void generate_hs21_email(char email_destination[email_length], char first_name[f
     strcat(email_destination, "@stud.hs21.de");
 }
 
+
+student empty_datapoint(){
+    student student;
+    return student;
+}
+
 // very simple function to get a single datapoint. no fancy UI.
 //quick and dirty: max string length not fixed!!!
 student enter_datapoint() {
