@@ -32,3 +32,26 @@ void print_student(student student){
     printf("%s\n", student.company.contact_person.email);
     printf("%s\n", student.company.contact_person.phone_number);
 }
+
+
+//basic fileio
+bool save_file(student list[dataset_size], const char* filename){
+    FILE out = fopen(filename, "wb");
+    if(out == NULL){
+        return false;
+    }
+    fwrite(list, sizeof(student) * dataset_size, 1, out);
+    fclose(out);
+    return true;
+}
+
+bool load_file(student list[dataset_size], const char* filename){
+    FILE in = fopen(filename, "rb");
+    if(in == NULL){
+        return false;
+    }
+    fread(list, sizeof(student) * dataset_size, 1, in);
+    fclose(in);
+    return true;
+}
+
