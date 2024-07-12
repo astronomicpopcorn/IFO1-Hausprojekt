@@ -21,3 +21,4 @@ const unsigned short int email_length = first_name_length + last_name_length + c
 
 
 const unsigned short int query_length = 64;
+const unsigned short int filename_length = 64;
