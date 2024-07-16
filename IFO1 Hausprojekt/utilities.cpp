@@ -1,10 +1,12 @@
 #include "datastructures.h"
 #include "constants.h"
+#include "windowinteractions.h"
 
 #include <ctype.h>
 #include <windows.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 void lowercase_string(char *ptr){
     while (*ptr) {
@@ -37,7 +39,8 @@ void print_student(student student){
 
 //basic fileio
 bool save_file(student list[dataset_size], const char* filename){
-    FILE out = fopen(filename, "wb");
+    FILE *out;
+    out = fopen(filename, "wb");
     if(out == NULL){
         return false;
     }
@@ -47,7 +50,8 @@ bool save_file(student list[dataset_size], const char* filename){
 }
 
 bool load_file(student list[dataset_size], const char* filename){
-    FILE in = fopen(filename, "rb");
+    FILE *in;
+    in = fopen(filename, "rb");
     if(in == NULL){
         return false;
     }
@@ -78,13 +82,15 @@ void add_file_extension(char filename[filename_length]){
 
 void render_something(button buttonlist[button_list_length]){
     Vector2D console_size = get_console_size();
-    char background_color[16] = "\033[97;44m";
-    char button_color[16] = "\033[30;47m";
-    char highlighted_button_color[16] = "\033[30;103m";
-    char frame[(console_size.x + 4) * (console_size.y + 4)] = background_color;
+    char background_color[9] = "\033[97;44m";
+    char button_color[9] = "\033[30;47m";
+    char highlighted_button_color[10] = "\033[30;103m";
+    const int frameSize = 20000;
+    char frame[frameSize] = "";
+    strcpy(frame, background_color);
     int i;
     bool buttonrendered = false;
-    for(int y = 0; y < console_size.y; y++){
+    for(int y = 0; y < console_size.y - 1; y++){
         for(int x = 0; x < console_size.x; x++){
             i = 0;
             buttonrendered = false;
@@ -97,7 +103,15 @@ void render_something(button buttonlist[button_list_length]){
                     else{
                         strcat(frame, button_color);
                     }
-                    strcat(frame, buttonlist[i].label);
+                    for (int j = 0; j < buttonlist[i].size.x; j++) {
+                        if (j < strlen(buttonlist[i].label)) {
+                            frame[strlen(frame)] = buttonlist[i].label[j];
+                        }
+                        else{
+                            frame[strlen(frame)] = ' ';
+                        }
+                        x++;
+                    }
                     strcat(frame, background_color);
                     break;
                 }
@@ -107,7 +121,9 @@ void render_something(button buttonlist[button_list_length]){
                 strcat(frame, " ");
             }
         }
+        strcat(frame, "\n");
     }
+    printf("%s%s", "\033[H", frame);
 }
 
 

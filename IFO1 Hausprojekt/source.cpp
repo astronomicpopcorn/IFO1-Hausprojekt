@@ -12,6 +12,68 @@
 
 void main() {
 
+    button list[button_list_length];
+    list[0].position.x = 1;
+    list[0].position.y = 1;
+    list[0].size.x = 10;
+    list[0].size.y = 1;
+    list[0].id = 0;
+    list[0].highlighted = true;
+    list[0].label = "Hallo!";
+    list[1].position.x = 1;
+    list[1].position.y = 3;
+    list[1].size.x = 10;
+    list[1].size.y = 1;
+    list[1].id = 0;
+    list[1].highlighted = false;
+    list[1].label = "Hallo!";
+    list[2].position.x = 21;
+    list[2].position.y = 1;
+    list[2].size.x = 10;
+    list[2].size.y = 1;
+    list[2].id = 0;
+    list[2].highlighted = false;
+    list[2].label = "Hallo!";
+    list[3].position.x = 21;
+    list[3].position.y = 3;
+    list[3].size.x = 10;
+    list[3].size.y = 1;
+    list[3].id = 0;
+    list[3].highlighted = false;
+    list[3].label = "Hallo!";
+    list[4].position.x = 21;
+    list[4].position.y = 7;
+    list[4].size.x = 20;
+    list[4].size.y = 1;
+    list[4].id = 0;
+    list[4].highlighted = false;
+    list[4].label = "Knopf";
+    while (true) {
+        
+        render_something(list);
+        if (kbhit()) {
+            if (getch() == 224) {
+                char c = getch();
+                switch (c) {
+                    case 72:
+                        select_next_button(list, 'u');
+                        break;
+                    case 80:
+                        select_next_button(list, 'd');
+                        break;
+                    case 77:
+                        select_next_button(list, 'r');
+                        break;
+                    case 75:
+                        select_next_button(list, 'l');
+                        break;
+                }
+                
+            }
+            
+        }
+    }
+
     short int matching_indices[dataset_size]; //used for search function
     student students[dataset_size]; //main array
     

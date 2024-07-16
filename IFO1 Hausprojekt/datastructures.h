@@ -45,7 +45,7 @@ typedef struct student {
 typedef struct button {
     struct Vector2D position;
     struct Vector2D size;
-    const char* label;
+    const char *label;
     int id = -1;
     bool highlighted = false;
-}
+};
