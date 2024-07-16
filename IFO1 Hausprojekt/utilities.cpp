@@ -178,19 +178,7 @@ bool select_next_button(button buttonlist[button_list_length], char direction){
         case 'u':
             for(i = 0; i < button_list_length; i++){
                 if(buttonlist[i].position.x == buttonlist[current_selected].position.x && buttonlist[i].position.y < buttonlist[current_selected].position.y && buttonlist[i].id != -1){
-                    if(candidate_index = -1){
-                        candidate_index = i;
-                    }
-                    else if(buttonlist[i].position.y < buttonlist[candidate_index].position.y){
-                        candidate_index = i;
-                    }
-                }
-            }
-            break;
-        case 'd':
-            for(i = 0; i < button_list_length; i++){
-                if(buttonlist[i].position.x == buttonlist[current_selected].position.x && buttonlist[i].position.y > buttonlist[current_selected].position.y && buttonlist[i].id != -1){
-                    if(candidate_index = -1){
+                    if(candidate_index == -1){
                         candidate_index = i;
                     }
                     else if(buttonlist[i].position.y > buttonlist[candidate_index].position.y){
@@ -199,13 +187,25 @@ bool select_next_button(button buttonlist[button_list_length], char direction){
                 }
             }
             break;
+        case 'd':
+            for(i = 0; i < button_list_length; i++){
+                if(buttonlist[i].position.x == buttonlist[current_selected].position.x && buttonlist[i].position.y > buttonlist[current_selected].position.y && buttonlist[i].id != -1){
+                    if(candidate_index == -1){
+                        candidate_index = i;
+                    }
+                    else if(buttonlist[i].position.y < buttonlist[candidate_index].position.y){
+                        candidate_index = i;
+                    }
+                }
+            }
+            break;
         case 'l':
             for(i = 0; i < button_list_length; i++){
                 if(buttonlist[i].position.y == buttonlist[current_selected].position.y && buttonlist[i].position.x < buttonlist[current_selected].position.x && buttonlist[i].id != -1){
-                    if(candidate_index = -1){
+                    if(candidate_index == -1){
                         candidate_index = i;
                     }
-                    else if(buttonlist[i].position.x < buttonlist[candidate_index].position.x){
+                    else if(buttonlist[i].position.x > buttonlist[candidate_index].position.x){
                         candidate_index = i;
                     }
                 }
@@ -214,10 +214,10 @@ bool select_next_button(button buttonlist[button_list_length], char direction){
         case 'r':
             for(i = 0; i < button_list_length; i++){
                 if(buttonlist[i].position.y == buttonlist[current_selected].position.y && buttonlist[i].position.x > buttonlist[current_selected].position.x && buttonlist[i].id != -1){
-                    if(candidate_index = -1){
+                    if(candidate_index == -1){
                         candidate_index = i;
                     }
-                    else if(buttonlist[i].position.x > buttonlist[candidate_index].position.x){
+                    else if(buttonlist[i].position.x < buttonlist[candidate_index].position.x){
                         candidate_index = i;
                     }
                 }
