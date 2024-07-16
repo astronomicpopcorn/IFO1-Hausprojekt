@@ -94,7 +94,7 @@ void render_something(button buttonlist[button_list_length]){
         for(int x = 0; x < console_size.x; x++){
             i = 0;
             buttonrendered = false;
-            while(buttonlist[i].id != -1){
+            while(buttonlist[i].id != -1 && i < button_list_length){
                 if(y == buttonlist[i].position.y && x == buttonlist[i].position.x){
                     buttonrendered = true;
                     if(buttonlist[i].highlighted){
@@ -112,6 +112,7 @@ void render_something(button buttonlist[button_list_length]){
                         }
                         x++;
                     }
+                    x--;
                     strcat(frame, background_color);
                     break;
                 }
@@ -121,7 +122,10 @@ void render_something(button buttonlist[button_list_length]){
                 strcat(frame, " ");
             }
         }
-        strcat(frame, "\n");
+        if (i < console_size.y - 1) {
+            strcat(frame, "\n");
+        }
+        
     }
     printf("%s%s", "\033[H", frame);
 }

@@ -13,44 +13,49 @@
 void main() {
 
     button list[button_list_length];
-    list[0].position.x = 1;
-    list[0].position.y = 1;
-    list[0].size.x = 10;
-    list[0].size.y = 1;
-    list[0].id = 0;
+    int index = 0;
+    const char text[7] = "Hallo!";
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 8; j++) {
+            list[index].position.x = i*12 + 2;
+            list[index].position.y = j*2 + 1;
+            list[index].size.x = 10;
+            list[index].size.y = 1;
+            list[index].id = index;
+            list[index].highlighted = false;
+            list[index].label = text;
+            index++;
+        }
+        
+    }
+    
     list[0].highlighted = true;
-    list[0].label = "Hallo!";
-    list[1].position.x = 1;
-    list[1].position.y = 3;
-    list[1].size.x = 10;
-    list[1].size.y = 1;
-    list[1].id = 0;
-    list[1].highlighted = false;
-    list[1].label = "Hallo!";
-    list[2].position.x = 21;
-    list[2].position.y = 1;
-    list[2].size.x = 10;
-    list[2].size.y = 1;
-    list[2].id = 0;
-    list[2].highlighted = false;
-    list[2].label = "Hallo!";
-    list[3].position.x = 21;
-    list[3].position.y = 3;
-    list[3].size.x = 10;
-    list[3].size.y = 1;
-    list[3].id = 0;
-    list[3].highlighted = false;
-    list[3].label = "Hallo!";
-    list[4].position.x = 21;
-    list[4].position.y = 7;
-    list[4].size.x = 20;
-    list[4].size.y = 1;
-    list[4].id = 0;
-    list[4].highlighted = false;
-    list[4].label = "Knopf";
+
     while (true) {
+        Vector2D mouse = get_mouse_on_console();
+        mouse.y -= 2;
+        mouse.x -= 1;
+
+        for (int i = 0; i < button_list_length; i++) {
+            if (mouse.x >= list[i].position.x &&
+                mouse.x < list[i].position.x + list[i].size.x &&
+                mouse.y >= list[i].position.y &&
+                mouse.y < list[i].position.y + list[i].size.y) {
+                list[i].highlighted = true;
+            }
+            else {
+                list[i].highlighted = false;
+            }
+        }
         
         render_something(list);
+        if (is_mouse_pressed()) {
+            for (int i = 0; i < button_list_length; i++) {
+                if (list[i].highlighted) {
+                    printf("\033[0m%i  ", list[i].id);
+                }
+            }
+        }
         if (kbhit()) {
             if (getch() == 224) {
                 char c = getch();
