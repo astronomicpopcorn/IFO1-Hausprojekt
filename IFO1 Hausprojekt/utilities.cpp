@@ -76,7 +76,7 @@ void add_file_extension(char filename[filename_length]){
 
 
 
-void render_something(button buttonlist[32]){
+void render_something(button buttonlist[button_list_length]){
     Vector2D console_size = get_console_size();
     char background_color[16] = "\033[97;44m";
     char button_color[16] = "\033[30;47m";
@@ -158,8 +158,80 @@ void replace_umlaute(char mystring[32], char buffer[64]){
     }
 }
 
+//accepts 'u', 'd', 'l' and 'r' for up, down, left and right respectively
+//returns false if no button is selected or direction is invalid. Otherwise true
+bool select_next_button(button buttonlist[button_list_length], char direction){
+    int current_selected = -1;
+    int candidate_index = -1;
+    int i;
+    for(i = 0; i < button_list_length; i++){
+        if(buttonlist[i].highlighted && buttonlist[i].id != -1){
+            current_selected = i;
+            break;
+        }
+    }
+    if(current_selected == -1){
+        return false;
+    }
 
-
+    switch(direction){
+        case 'u':
+            for(i = 0; i < button_list_length; i++){
+                if(buttonlist[i].position.x == buttonlist[current_selected].position.x && buttonlist[i].position.y < buttonlist[current_selected].position.y && buttonlist[i].id != -1){
+                    if(candidate_index = -1){
+                        candidate_index = i;
+                    }
+                    else if(buttonlist[i].position.y < buttonlist[candidate_index].position.y){
+                        candidate_index = i;
+                    }
+                }
+            }
+            break;
+        case 'd':
+            for(i = 0; i < button_list_length; i++){
+                if(buttonlist[i].position.x == buttonlist[current_selected].position.x && buttonlist[i].position.y > buttonlist[current_selected].position.y && buttonlist[i].id != -1){
+                    if(candidate_index = -1){
+                        candidate_index = i;
+                    }
+                    else if(buttonlist[i].position.y > buttonlist[candidate_index].position.y){
+                        candidate_index = i;
+                    }
+                }
+            }
+            break;
+        case 'l':
+            for(i = 0; i < button_list_length; i++){
+                if(buttonlist[i].position.y == buttonlist[current_selected].position.y && buttonlist[i].position.x < buttonlist[current_selected].position.x && buttonlist[i].id != -1){
+                    if(candidate_index = -1){
+                        candidate_index = i;
+                    }
+                    else if(buttonlist[i].position.x < buttonlist[candidate_index].position.x){
+                        candidate_index = i;
+                    }
+                }
+            }
+            break;
+        case 'r':
+            for(i = 0; i < button_list_length; i++){
+                if(buttonlist[i].position.y == buttonlist[current_selected].position.y && buttonlist[i].position.x > buttonlist[current_selected].position.x && buttonlist[i].id != -1){
+                    if(candidate_index = -1){
+                        candidate_index = i;
+                    }
+                    else if(buttonlist[i].position.x > buttonlist[candidate_index].position.x){
+                        candidate_index = i;
+                    }
+                }
+            }
+            break;
+        default:
+            return false;
+            break;
+    }
+    if(candidate_index != -1){
+        buttonlist[current_selected].highlighted = false;
+        buttonlist[candidate_index].highlighted = true;
+    }
+}
 
 
 
