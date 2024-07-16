@@ -46,6 +46,6 @@ typedef struct button {
     struct Vector2D position;
     struct Vector2D size;
     const char* label;
-    int id;
+    int id = -1;
     bool highlighted = false;
 }
