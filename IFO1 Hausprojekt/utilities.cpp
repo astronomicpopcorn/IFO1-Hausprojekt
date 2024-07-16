@@ -71,3 +71,96 @@ void add_file_extension(char filename[filename_length]){
         filename[filename_length - 1] = '\0';
     }
 }
+
+
+
+
+
+void render_something(button buttonlist[32]){
+    Vector2D console_size = get_console_size();
+    char background_color[16] = "\033[97;44m";
+    char button_color[16] = "\033[30;47m";
+    char highlighted_button_color[16] = "\033[30;103m";
+    char frame[(console_size.x + 4) * (console_size.y + 4)] = background_color;
+    int i;
+    bool buttonrendered = false;
+    for(int y = 0; y < console_size.y; y++){
+        for(int x = 0; x < console_size.x; x++){
+            i = 0;
+            buttonrendered = false;
+            while(buttonlist[i].id != -1){
+                if(y == buttonlist[i].position.y && x == buttonlist[i].position.x){
+                    buttonrendered = true;
+                    if(buttonlist[i].highlighted){
+                        strcat(frame, highlighted_button_color);
+                    }
+                    else{
+                        strcat(frame, button_color);
+                    }
+                    strcat(frame, buttonlist[i].label);
+                    strcat(frame, background_color);
+                    break;
+                }
+                i++;
+            }
+            if(!buttonrendered){
+                strcat(frame, " ");
+            }
+        }
+    }
+}
+
+
+
+void replace_umlaute(char mystring[32], char buffer[64]){
+    int buffer_pointer = 0;
+    int string_pointer = 0;
+    while(mystring[string_pointer] != '\0'){
+        if(mystring[string_pointer] == 'ä'){
+            buffer[buffer_pointer] = 'a';
+            buffer_pointer++;
+            buffer[buffer_pointer] = 'e';
+        }
+        else if(mystring[string_pointer] == 'Ä'){
+            buffer[buffer_pointer] = 'A';
+            buffer_pointer++;
+            buffer[buffer_pointer] = 'e';
+        }
+        else if(mystring[string_pointer] == 'ü'){
+            buffer[buffer_pointer] = 'u';
+            buffer_pointer++;
+            buffer[buffer_pointer] = 'e';
+        }
+        else if(mystring[string_pointer] == 'Ü'){
+            buffer[buffer_pointer] = 'U';
+            buffer_pointer++;
+            buffer[buffer_pointer] = 'e';
+        }
+        else if(mystring[string_pointer] == 'ö'){
+            buffer[buffer_pointer] = 'o';
+            buffer_pointer++;
+            buffer[buffer_pointer] = 'e';
+        }
+        else if(mystring[string_pointer] == 'Ö'){
+            buffer[buffer_pointer] = 'O';
+            buffer_pointer++;
+            buffer[buffer_pointer] = 'e';
+        }
+        else if(mystring[string_pointer] == 'ß'){
+            buffer[buffer_pointer] = 's';
+            buffer_pointer++;
+            buffer[buffer_pointer] = 's';
+        }
+        else{
+            buffer[buffer_pointer] = mystring[string_pointer];
+        }
+        buffer_pointer++;
+    }
+}
+
+
+
+
+
+
+
