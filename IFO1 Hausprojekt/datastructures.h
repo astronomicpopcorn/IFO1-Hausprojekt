@@ -39,3 +39,13 @@ typedef struct student {
     char phone_number[phone_number_length] = "\0";
     struct company company;
 };
+
+
+
+typedef struct button {
+    struct Vector2D position;
+    struct Vector2D size;
+    const char* label;
+    int id;
+    bool highlighted = false;
+}
