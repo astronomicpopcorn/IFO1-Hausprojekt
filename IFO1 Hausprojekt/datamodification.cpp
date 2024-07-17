@@ -1,5 +1,6 @@
 #include "datastructures.h"
 #include "constants.h"
+#include "utilities.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -12,6 +13,7 @@ void generate_company_email(char email_destination[email_length], char first_nam
     strcat(email_destination, "@");
     strcat(email_destination, company_name);
     strcat(email_destination, ".de");
+    replace_whitespace(email_destination, '-');
 }
 
 void generate_hs21_email(char email_destination[email_length], char first_name[first_name_length], char last_name[last_name_length]) {
@@ -20,6 +22,7 @@ void generate_hs21_email(char email_destination[email_length], char first_name[f
     strcat(email_destination, ".");
     strcat(email_destination, last_name);
     strcat(email_destination, "@stud.hs21.de");
+    replace_whitespace(email_destination, '-');
 }
 
 
