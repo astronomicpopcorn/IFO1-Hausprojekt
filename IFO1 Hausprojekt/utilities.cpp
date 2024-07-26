@@ -130,7 +130,7 @@ void render_something(button buttonlist[button_list_length]){
     printf("%s%s", "\033[H", frame);
 }
 
-void replace_whitespace(const char* string_to_change, char replacement){
+void replace_whitespace(char* string_to_change, char replacement){
     for(int i = 0; string_to_change[i] != '\0'; i++){
         if(string_to_change[i] == ' '){
             string_to_change[i] = replacement;
