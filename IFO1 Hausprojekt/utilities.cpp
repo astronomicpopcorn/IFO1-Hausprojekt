@@ -8,6 +8,34 @@
 #include <string.h>
 #include <stdlib.h>
 
+bool async_scanf(char buffer[async_input_length], char character_to_check){
+    bool character_found = false;
+    char c = 0;
+    unsigned short int terminator_index;
+    while(kbhit()){
+        terminator_index = strlen(buffer);
+        c = getch();
+        if(character_to_check == '\n' || character_to_check == '\r'){
+            if(c == '\n' || c == '\r'){
+                character_found = true;
+            }
+        }
+        else if(c == character_to_check){
+            character_found = true;
+        }
+        if(c == 8 && terminator_index > 0){
+            buffer[terminator_index - 1] = '\0';
+        }
+        else if(c != 8 && terminator_index < async_input_length - 1){
+            buff[terminator_index] = c;
+            buff[terminator_index + 1] = '\0'
+        }
+    }
+    return character_found;
+}
+
+
+
 void lowercase_string(char *ptr){
     while (*ptr) {
         *ptr = tolower((unsigned char) *ptr);
