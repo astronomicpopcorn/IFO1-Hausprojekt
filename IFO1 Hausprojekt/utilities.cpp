@@ -8,6 +8,17 @@
 #include <string.h>
 #include <stdlib.h>
 
+void copy_string(char* destination, char* source){
+    unsigned short int dest_ctr = 0;
+    unsigned short int src_ctr = 0;
+    while(*(destination + dest_ctr) != '\0' && *(source + src_ctr) != '\0'){
+        *(destination + dest_ctr) = *(source + src_ctr);
+        dest_ctr++;
+        src_ctr++;
+    }
+    *(destination + dest_ctr) = '\0';
+}
+
 bool async_scanf(char buffer[async_input_length], char character_to_check){
     bool character_found = false;
     char c = 0;
