@@ -5,7 +5,6 @@
 
 
 
-//IF POSSIBLE: REWRITE SEARCH TO INCLUDE A WILDCARD CHAR (underscore) THAT MATCHES ANY 
 
 //search a single datapoint for any match with a query. query will be split by whitespace and punctuation (Will return true if query is "Nick Heinz Olaf" and searched student contains "Nick" anywhere)
 //TODO: Make case insensitive
