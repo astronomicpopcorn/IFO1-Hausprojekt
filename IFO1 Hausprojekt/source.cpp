@@ -12,76 +12,12 @@
 
 void main() {
 
-    button list[button_list_length];
-    int index = 0;
-    const char text[7] = "Hallo!";
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 8; j++) {
-            list[index].position.x = i*12 + 2;
-            list[index].position.y = j*2 + 1;
-            list[index].size.x = 10;
-            list[index].size.y = 1;
-            list[index].id = index;
-            list[index].highlighted = false;
-            list[index].label = text;
-            index++;
-        }
-        
-    }
+
     
-    list[0].highlighted = true;
-
-    while (true) {
-        Vector2D mouse = get_mouse_on_console();
-        mouse.y -= 2;
-        mouse.x -= 1;
-
-        for (int i = 0; i < button_list_length; i++) {
-            if (mouse.x >= list[i].position.x &&
-                mouse.x < list[i].position.x + list[i].size.x &&
-                mouse.y >= list[i].position.y &&
-                mouse.y < list[i].position.y + list[i].size.y) {
-                list[i].highlighted = true;
-            }
-            else {
-                list[i].highlighted = false;
-            }
-        }
-        
-        render_something(list);
-        if (is_mouse_pressed()) {
-            for (int i = 0; i < button_list_length; i++) {
-                if (list[i].highlighted) {
-                    printf("\033[0m%i  ", list[i].id);
-                }
-            }
-        }
-        if (kbhit()) {
-            if (getch() == 224) {
-                char c = getch();
-                switch (c) {
-                    case 72:
-                        select_next_button(list, 'u');
-                        break;
-                    case 80:
-                        select_next_button(list, 'd');
-                        break;
-                    case 77:
-                        select_next_button(list, 'r');
-                        break;
-                    case 75:
-                        select_next_button(list, 'l');
-                        break;
-                }
-                
-            }
-            
-        }
-    }
-
-    short int matching_indices[dataset_size]; //used for search function
+    short int matching_indices[dataset_size]; //used for search function to store indeces of matching entries
     student students[dataset_size]; //main array
     
+    //set some random students
     strcpy(students[0].first_name, "Nick");
     strcpy(students[0].last_name, "Winter");
     strcpy(students[0].course_of_study, "Mechatronik");
@@ -257,37 +193,4 @@ void main() {
     getchar();
 
 
-
-    // THIS PUTS THE CURSOR ON DA GODDAMN SCREEN
-    // put it into a function. please.
-
-    //while (true) {
-    //    Vector2D pos = get_mouse_on_window();
-    //    Vector2D consolesize = get_console_size();
-    //    Vector2D topleft, size;
-    //    get_window_position(&topleft, &size);
-    //    consolesize.y += 2;
-    //    pos.y += 10;
-    //    pos.x = pos.x / (size.x / consolesize.x) - 1;
-    //    pos.y = pos.y / (size.y / consolesize.y) - 2;
-    //    char screenbuffer[200*200];
-    //    int count = 0;
-    //    for (int y = 0; y < consolesize.y; y++) {
-    //        for (int x = 0; x < consolesize.x; x++) {
-    //            if (y == pos.y && x == pos.x) {
-    //                screenbuffer[count] = 'O';
-    //            }
-    //            else {
-    //                screenbuffer[count] = ' ';
-    //            }
-    //            count++;
-    //        }
-    //    }
-    //    screenbuffer[count] = '\0';
-    //    printf("\033[H%s", screenbuffer);
-    //    //printf("\033[H%4i %4i", pos.x, pos.y);
-    //}
-
-
-    //getchar();
 }

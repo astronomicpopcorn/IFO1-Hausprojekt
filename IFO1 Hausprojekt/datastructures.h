@@ -23,8 +23,8 @@ typedef struct contact_person {
 
 typedef struct company {
     char name[company_name_length] = "\0";
-    struct address address;
-    struct contact_person contact_person;
+    address address;
+    contact_person contact_person;
 };
 
 typedef struct student {
@@ -35,16 +35,16 @@ typedef struct student {
     char email[email_length] = "\0";
     char enrollment_year[enrollment_year_length] = "\0";
     char course_of_study[course_of_study_length] = "\0";
-    struct address home_address;
+    address home_address;
     char phone_number[phone_number_length] = "\0";
-    struct company company;
+    company company;
 };
 
 
 
 typedef struct button {
-    struct Vector2D position;
-    struct Vector2D size;
+    Vector2D position;
+    Vector2D size;
     const char *label;
     int id = -1;
     bool highlighted = false;

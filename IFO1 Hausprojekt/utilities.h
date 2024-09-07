@@ -1,8 +1,6 @@
 #pragma once
 #include "datastructures.h"
 
-extern bool async_scanf(char buffer[async_input_length], char character_to_check);
-
 extern void copy_string(char* destination, char* source);
 extern void lowercase_string(char *ptr);
 extern bool is_mouse_pressed();

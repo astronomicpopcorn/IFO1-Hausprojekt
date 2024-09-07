@@ -4,6 +4,8 @@
 #include <windows.h>
 
 
+// MOUSE INTERACTION DISCONTINUED DUE TO COMPLEXITY
+
 bool get_window_position(Vector2D *topleft, Vector2D *size) {
     HWND console_window = GetForegroundWindow();
     if (console_window == NULL) {
