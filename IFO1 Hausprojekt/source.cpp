@@ -12,7 +12,10 @@
 
 void main() {
 
-
+    char mystr[32] = "Hello World!";
+    lowercase_string(mystr);
+    printf(mystr);
+    getchar();
     
     short int matching_indices[dataset_size]; //used for search function to store indeces of matching entries
     student students[dataset_size]; //main array

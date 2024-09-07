@@ -1,51 +1,63 @@
 #include "datastructures.h"
 #include "constants.h"
+#include "utilities.h"
 
 #include <string.h>
 
-
+//checks for substring in string, but converts main string to lowercase. expects query to already be lowercase
+bool strstr_insensitive(char *string_to_search, char *query_string) {
+    char temp_search_string[email_length]; // to not modify original input
+    strcpy(temp_search_string, string_to_search);
+    lowercase_string(temp_search_string);
+    return strstr(temp_search_string, query_string) != NULL;
+}
 
 
 //search a single datapoint for any match with a query. query will be split by whitespace and punctuation (Will return true if query is "Nick Heinz Olaf" and searched student contains "Nick" anywhere)
 //TODO: Make case insensitive
-// should use AND logic for tokens instead of OR (untested)
 bool search_datapoint(struct student *student, char _query[query_length]) {
     if (student->is_empty) {
         return false;
     }
     char query[query_length];
-    strcpy(query, _query); //to not modify original query string
     bool match = false;
     bool all_match = true;
     char *token;
+    
+
+    strcpy(query, _query); //to not modify original query string
+    lowercase_string(query);
+
     token = strtok(query, " ,.");      //split query into tokens
     while (token != NULL) {    //loop over all tokens
         match = false;
         //*student base data
-        match = match || strstr(student->student_number, token) != NULL;
-        match = match || strstr(student->first_name, token) != NULL;
-        match = match || strstr(student->last_name, token) != NULL;
-        match = match || strstr(student->email, token) != NULL;
-        match = match || strstr(student->enrollment_year, token) != NULL;
-        match = match || strstr(student->course_of_study, token) != NULL;
-        match = match || strstr(student->phone_number, token) != NULL;
+        
+        
+        match = match || strstr_insensitive(student->student_number, token);
+        match = match || strstr_insensitive(student->first_name, token);
+        match = match || strstr_insensitive(student->last_name, token);
+        match = match || strstr_insensitive(student->email, token);
+        match = match || strstr_insensitive(student->enrollment_year, token);
+        match = match || strstr_insensitive(student->course_of_study, token);
+        match = match || strstr_insensitive(student->phone_number, token);
         //*student address
-        match = match || strstr(student->home_address.street, token) != NULL;
-        match = match || strstr(student->home_address.house_number, token) != NULL;
-        match = match || strstr(student->home_address.city, token) != NULL;
-        match = match || strstr(student->home_address.postal_code, token) != NULL;
+        match = match || strstr_insensitive(student->home_address.street, token);
+        match = match || strstr_insensitive(student->home_address.house_number, token);
+        match = match || strstr_insensitive(student->home_address.city, token);
+        match = match || strstr_insensitive(student->home_address.postal_code, token);
         //*student company
-        match = match || strstr(student->company.name, token) != NULL;
+        match = match || strstr_insensitive(student->company.name, token);
         //company address
-        match = match || strstr(student->company.address.street, token) != NULL;
-        match = match || strstr(student->company.address.house_number, token) != NULL;
-        match = match || strstr(student->company.address.city, token) != NULL;
-        match = match || strstr(student->company.address.postal_code, token) != NULL;
+        match = match || strstr_insensitive(student->company.address.street, token);
+        match = match || strstr_insensitive(student->company.address.house_number, token);
+        match = match || strstr_insensitive(student->company.address.city, token);
+        match = match || strstr_insensitive(student->company.address.postal_code, token);
         //company contact_person
-        match = match || strstr(student->company.contact_person.first_name, token) != NULL;
-        match = match || strstr(student->company.contact_person.last_name, token) != NULL;
-        match = match || strstr(student->company.contact_person.email, token) != NULL;
-        match = match || strstr(student->company.contact_person.phone_number, token) != NULL;
+        match = match || strstr_insensitive(student->company.contact_person.first_name, token);
+        match = match || strstr_insensitive(student->company.contact_person.last_name, token);
+        match = match || strstr_insensitive(student->company.contact_person.email, token);
+        match = match || strstr_insensitive(student->company.contact_person.phone_number, token);
 
         //Update Token
         token = strtok(NULL, " ,.");
