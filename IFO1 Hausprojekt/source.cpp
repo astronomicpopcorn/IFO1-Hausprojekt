@@ -9,13 +9,13 @@
 #include "datamodification.h"
 #include "windowinteractions.h"
 #include "searching.h"
+#include "rendering.h"
 
 void main() {
+    while(true){
 
-    char mystr[32] = "Hello World!";
-    lowercase_string(mystr);
-    printf(mystr);
-    getchar();
+        render_test();
+    }
     
     short int matching_indices[dataset_size]; //used for search function to store indeces of matching entries
     student students[dataset_size]; //main array

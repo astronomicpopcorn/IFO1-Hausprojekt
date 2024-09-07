@@ -20,9 +20,16 @@ const unsigned short int email_length = first_name_length + last_name_length + c
 
 
 
-const unsigned short int query_length = 64;
+const unsigned short int query_length = 128;
 const unsigned short int filename_length = 64;
 
 const unsigned short int async_input_length = 128;
 
-const unsigned short int button_list_length = 32;
+const unsigned short int windowelement_list_length = 32;
+
+const unsigned short int color_length = 10;
+const unsigned short int windowelement_label_length = 128;
+
+
+//on my large screen, maximum console size is 280x75. Due to colors having up to 10 chars: 280x75x10 = 210000
+const unsigned long int max_display_string_length = 210000;

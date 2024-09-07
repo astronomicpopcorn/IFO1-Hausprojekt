@@ -42,10 +42,23 @@ typedef struct student {
 
 
 
-typedef struct button {
+typedef struct windowelement {
     Vector2D position;
     Vector2D size;
-    const char *label;
+
+    char label[windowelement_label_length] = "";
+    char text_buffer[query_length] = "";
     int id = -1;
+    int type = 0;
+    /*
+    0: simple text box. not interactable
+    1: button. selectable
+    2: text input box
+
+    */
     bool highlighted = false;
+
+    char default_color[color_length] = "";
+    char highlighted_color[color_length] = "";
+
 };
