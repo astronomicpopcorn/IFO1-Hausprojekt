@@ -115,15 +115,6 @@ void main() {
         students[i].is_empty = false;
     }
 
-    //students[10] = enter_datapoint();
-
-    //int k = 0;
-    //while (!students[k].is_empty) {
-    //    print_student(students[k]);
-    //    printf("\n\nIndex %i:\n\n", k);
-    //    k++;
-    //}
-
     //test non-waiting typing - WORKS!
     //char c = 0;
     //char buff[100] = "\0";
@@ -147,23 +138,7 @@ void main() {
     //    Sleep(500);
     //}
 
-
-    //mouse interactions: getAsyncKeyState(somethin' magic); - WORKS!
-    //while (true) {
-    //    if (GetAsyncKeyState(VK_LBUTTON)) {
-    //        printf("%s", "\033[H:)");
-    //    }
-    //    else {
-    //        printf("%s", "\033[H  ");
-    //    }
-    //}
-
-
-
-
-
     //DYNAMIC SEARCHING. 
-    //Put into function that returns array of indexes
 
     char t = '\0';
     char buffer[100] = "\0";

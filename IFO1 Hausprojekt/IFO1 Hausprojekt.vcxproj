@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="datamodification.cpp" />
+    <ClCompile Include="rendering.cpp" />
     <ClCompile Include="searching.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="utilities.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="datamodification.h" />
     <ClInclude Include="datastructures.h" />
+    <ClInclude Include="rendering.h" />
     <ClInclude Include="searching.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="windowinteractions.h" />

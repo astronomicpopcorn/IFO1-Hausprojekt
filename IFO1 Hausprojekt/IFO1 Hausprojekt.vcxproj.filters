@@ -30,6 +30,9 @@
     <ClCompile Include="datamodification.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="rendering.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -48,6 +51,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="datamodification.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="rendering.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
