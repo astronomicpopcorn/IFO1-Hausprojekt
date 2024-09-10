@@ -163,3 +163,112 @@ windowelement make_window_element(int column, int row, int width, const char *la
 }
 
 
+
+void update_highlighted_element(windowelement *element_array, int array_length) {
+    char c;
+    int i, original_index, next_index, temp_value;
+    //if anything has been pressed, loop until input buffer is empty
+    while (kbhit()) {
+        //reset values
+        original_index = -1;
+        next_index = -1;
+        temp_value = 10000;
+        //get first char from input buffer
+        c = getch(); 
+        //loop through all elements and save first that is highlighted
+        for (i = 0; i < array_length; i++) {
+            if (element_array[i].highlighted) {
+                original_index = i;
+                break;
+            }
+        }
+        //no highlighted found -> exit without changing anything
+        if (original_index == -1) {
+            return;
+        }
+        //any key for up pressed?
+        if (c == 'w' || c == 'W') {
+            //loop through all elements
+            for (i = 0; i < array_length; i++) {
+                //if x matches and y is less than original
+                if (element_array[i].type != 0 &&
+                    element_array[i].position.x == element_array[original_index].position.x &&
+                    element_array[i].position.y < element_array[original_index].position.y &&
+                    element_array[original_index].position.y - element_array[i].position.y < temp_value) {
+                    //update candidate index and value for comparison
+                    next_index = i;
+                    temp_value = element_array[original_index].position.y - element_array[i].position.y;
+                }
+            }
+            //if a candidate has been found
+            if (next_index != -1) {
+                //switch highlight from old to new element
+                element_array[next_index].highlighted = true;
+                element_array[original_index].highlighted = false;
+            }
+        }
+        //any key for down pressed?
+        else if (c == 's' || c == 'S') {
+            //loop through all elements
+            for (i = 0; i < array_length; i++) {
+                //if x matches and y is greater than original
+                if (element_array[i].type != 0 &&
+                    element_array[i].position.x == element_array[original_index].position.x &&
+                    element_array[i].position.y > element_array[original_index].position.y &&
+                    element_array[i].position.y - element_array[original_index].position.y < temp_value) {
+                    //update candidate index and value for comparison
+                    next_index = i;
+                    temp_value = element_array[i].position.y - element_array[original_index].position.y;
+                }
+            }
+            //if a candidate has been found
+            if (next_index != -1) {
+                //switch highlight from old to new element
+                element_array[next_index].highlighted = true;
+                element_array[original_index].highlighted = false;
+            }
+        }
+        //any key for left pressed?
+        else if (c == 'a' || c == 'A') {
+            //loop through all elements
+            for (i = 0; i < array_length; i++) {
+                //if y matches and x is less than original
+                if (element_array[i].type != 0 &&
+                    element_array[i].position.y == element_array[original_index].position.y &&
+                    element_array[i].position.x < element_array[original_index].position.x &&
+                    element_array[original_index].position.x - element_array[i].position.x < temp_value) {
+                    //update candidate index and value for comparison
+                    next_index = i;
+                    temp_value = element_array[original_index].position.x - element_array[i].position.x;
+                }
+            }
+            //if a candidate has been found
+            if (next_index != -1) {
+                //switch highlight from old to new element
+                element_array[next_index].highlighted = true;
+                element_array[original_index].highlighted = false;
+            }
+        }
+        //any key for right pressed?
+        else if (c == 'd' || c == 'D') {
+            //loop through all elements
+            for (i = 0; i < array_length; i++) {
+                //if y matches and x is greater than original
+                if (element_array[i].type != 0 &&
+                    element_array[i].position.y == element_array[original_index].position.y &&
+                    element_array[i].position.x > element_array[original_index].position.x &&
+                    element_array[i].position.x - element_array[original_index].position.x < temp_value) {
+                    //update candidate index and value for comparison
+                    next_index = i;
+                    temp_value = element_array[i].position.x - element_array[original_index].position.x;
+                }
+            }
+            //if a candidate has been found
+            if (next_index != -1) {
+                //switch highlight from old to new element
+                element_array[next_index].highlighted = true;
+                element_array[original_index].highlighted = false;
+            }
+        }
+    }
+}

@@ -2,6 +2,9 @@
 
 char ansiClearScreen[] = "\033[2J\033[H";
 
+char ansiResetCursor[] = "\033[H";
+
+
 //RESET
 
 char ansiReset[] = "\033[0m";

@@ -13,27 +13,39 @@
 #include "colorcodes.h"
 
 void main() {
-    char main_color[] = "\033[44m\033[37m";
-    char interactable_color[] = "\033[107m\033[30m";
+    //colors of the console
+    char main_color[] = "\033[44m\033[97m";
+    char interactable_color[] = "\033[47m\033[30m";
     char highlight_color[] = "\033[103m\033[30m";
-    char active_color[] = "\033[43m\033[30m";
+    char active_color[] = "\033[102m\033[30m";
 
-
-    windowelement test_array[3];
-    test_array[0] = make_window_element(10, 10, 10, "Hello!", 0, 0, main_color, "", "", false);
-    test_array[1] = make_window_element(11, 12, 10, "World!", 0, 0, main_color, "", "", false);
-    test_array[2] = make_window_element(35, 19, 10, "Fuck!", 0, 0, main_color, "", "", false);
-
-
-    while(true){
-
-        render(test_array, 3, main_color);
-    }
-    
     short int matching_indices[dataset_size]; //used for search function to store indeces of matching entries
     student students[dataset_size]; //main array
+
+    Vector2D console_size;
+
+    windowelement test_array[4];
+    test_array[0] = make_window_element(10, 10, 5, "Hi!", 0, 1, interactable_color, highlight_color, "", true);
+    test_array[1] = make_window_element(16, 10, 5, "Hi!", 1, 2, interactable_color, active_color, "", false);
+    test_array[2] = make_window_element(10, 12, 5, "Hi!", 2, 1, interactable_color, highlight_color, "", false);
+    test_array[3] = make_window_element(16, 12, 5, "Hi!", 3, 0, interactable_color, highlight_color, "", false);
+
+    //main loop
+    while(true){
+        console_size = get_console_size();
+        if (console_size.x < 150 || console_size.y < 40) {
+            printf("%s%s%sPlease resize your console window to at least 150x40 characters.\nThe console size is currently %ix%i", ansiResetCursor, ansiRed, ansiBlackBackground, console_size.x, console_size.y);
+            continue;
+        }
+
+        update_highlighted_element(test_array, 4);
+        render(test_array, 4, main_color);
+    }
+    
+    
     
     //set some random students
+    /*
     strcpy(students[0].first_name, "Nick");
     strcpy(students[0].last_name, "Winter");
     strcpy(students[0].course_of_study, "Mechatronik");
@@ -127,6 +139,8 @@ void main() {
     for (int i = 0; i < 10; i++) {
         students[i].is_empty = false;
     }
+    */
+
 
     //test non-waiting typing - WORKS!
     //char c = 0;
