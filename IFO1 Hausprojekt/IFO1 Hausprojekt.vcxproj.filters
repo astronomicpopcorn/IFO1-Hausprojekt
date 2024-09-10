@@ -56,5 +56,8 @@
     <ClInclude Include="rendering.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="colorcodes.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

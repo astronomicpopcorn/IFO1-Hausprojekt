@@ -10,11 +10,24 @@
 #include "windowinteractions.h"
 #include "searching.h"
 #include "rendering.h"
+#include "colorcodes.h"
 
 void main() {
+    char main_color[] = "\033[44m\033[37m";
+    char interactable_color[] = "\033[107m\033[30m";
+    char highlight_color[] = "\033[103m\033[30m";
+    char active_color[] = "\033[43m\033[30m";
+
+
+    windowelement test_array[3];
+    test_array[0] = make_window_element(10, 10, 10, "Hello!", 0, 0, main_color, "", "", false);
+    test_array[1] = make_window_element(11, 12, 10, "World!", 0, 0, main_color, "", "", false);
+    test_array[2] = make_window_element(35, 19, 10, "Fuck!", 0, 0, main_color, "", "", false);
+
+
     while(true){
 
-        render_test();
+        render(test_array, 3, main_color);
     }
     
     short int matching_indices[dataset_size]; //used for search function to store indeces of matching entries

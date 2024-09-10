@@ -44,21 +44,21 @@ typedef struct student {
 
 typedef struct windowelement {
     Vector2D position;
-    Vector2D size;
+    int width;
 
     char label[windowelement_label_length] = "";
-    char text_buffer[query_length] = "";
     int id = -1;
     int type = 0;
     /*
-    0: simple text box. not interactable
-    1: button. selectable
-    2: text input box
-
+    type 0: simple display
+    type 1: button (enter to activate)
+    type 2: input (enter to start and stop writing)
     */
     bool highlighted = false;
+    bool active = false;
 
     char default_color[color_length] = "";
     char highlighted_color[color_length] = "";
+    char active_color[color_length] = "";
 
 };

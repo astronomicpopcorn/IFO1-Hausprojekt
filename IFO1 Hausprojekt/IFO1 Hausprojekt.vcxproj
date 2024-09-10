@@ -136,6 +136,7 @@
     <ClCompile Include="windowinteractions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="colorcodes.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="datamodification.h" />
     <ClInclude Include="datastructures.h" />

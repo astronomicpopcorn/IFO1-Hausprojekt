@@ -145,7 +145,21 @@ void replace_umlaute(char mystring[32], char buffer[64]){
 }
 
 
+//builds an element. type is 0 for plain text, 1 for button, and 2 for text input.
+windowelement make_window_element(int column, int row, int width, const char *label, int id, int type, const char *def_col, const char *highlight_col, const char *active_col, bool is_highlighted) {
+    windowelement element;
+    Vector2D pos = { column, row };
+    element.position = pos;
+    element.width = width;
+    strcpy(element.label, label);
+    strcpy(element.default_color, def_col);
+    strcpy(element.highlighted_color, highlight_col);
+    strcpy(element.active_color, active_col);
+    element.id = id;
+    element.type = type;
+    element.highlighted = is_highlighted;
 
-
+    return element;
+}
 
 

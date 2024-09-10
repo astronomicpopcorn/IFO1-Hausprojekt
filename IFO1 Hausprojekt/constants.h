@@ -27,9 +27,9 @@ const unsigned short int async_input_length = 128;
 
 const unsigned short int windowelement_list_length = 32;
 
-const unsigned short int color_length = 10;
+const unsigned short int color_length = 14;
 const unsigned short int windowelement_label_length = 128;
 
 
-//on my large screen, maximum console size is 280x75. Due to colors having up to 10 chars: 280x75x10 = 210000
-const unsigned long int max_display_string_length = 210000;
+//on my large screen, maximum console size is 280x75. 
+const unsigned long int max_display_string_length = 280 * 75 * color_length;
