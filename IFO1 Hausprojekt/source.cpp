@@ -24,28 +24,20 @@ void main() {
 
     Vector2D console_size;
 
-    windowelement test_array[4];
-    test_array[0] = make_window_element(10, 10, 5, "Hi!", 0, 1, interactable_color, highlight_color, "", true);
-    test_array[1] = make_window_element(16, 10, 5, "Hi!", 1, 2, interactable_color, active_color, "", false);
-    test_array[2] = make_window_element(10, 12, 5, "Hi!", 2, 1, interactable_color, highlight_color, "", false);
-    test_array[3] = make_window_element(16, 12, 5, "Hi!", 3, 0, interactable_color, highlight_color, "", false);
+    //variables for table control
+    int i, table_page = 0, table_entry = 0;
+    char temp_table_string[72];
+    
+    char c; //stores recent inputs
 
-    //main loop
-    while(true){
-        console_size = get_console_size();
-        if (console_size.x < 150 || console_size.y < 40) {
-            printf("%s%s%sPlease resize your console window to at least 150x40 characters.\nThe console size is currently %ix%i", ansiResetCursor, ansiRed, ansiBlackBackground, console_size.x, console_size.y);
-            continue;
-        }
+    //search query
+    char query[query_length] = "";
 
-        update_highlighted_element(test_array, 4);
-        render(test_array, 4, main_color);
-    }
-    
-    
-    
+
+
+
     //set some random students
-    /*
+
     strcpy(students[0].first_name, "Nick");
     strcpy(students[0].last_name, "Winter");
     strcpy(students[0].course_of_study, "Mechatronik");
@@ -59,18 +51,18 @@ void main() {
     strcpy(students[0].company.contact_person.first_name, "Rafael");
     strcpy(students[0].company.contact_person.last_name, "Götzen");
     strcpy(students[0].company.name, "Airbus");
-
+    
     generate_company_email(students[0].company.contact_person.email, students[0].company.contact_person.first_name, students[0].company.contact_person.last_name, students[0].company.name);
     generate_hs21_email(students[0].email, students[0].first_name, students[0].last_name);
-
+    
     strcpy(students[0].company.contact_person.phone_number, "1234567890");
     strcpy(students[0].company.address.city, "Hamburg");
     strcpy(students[0].company.address.street, "Kreetslag");
     strcpy(students[0].company.address.house_number, "10");
     strcpy(students[0].company.address.postal_code, "21129");
-
-
-
+    
+    
+    
     strcpy(students[1].first_name, "Ole");
     strcpy(students[1].last_name, "Spindelndreher");
     strcpy(students[1].course_of_study, "Mechatronik");
@@ -84,18 +76,18 @@ void main() {
     strcpy(students[1].company.contact_person.first_name, "Martin");
     strcpy(students[1].company.contact_person.last_name, "Möhre");
     strcpy(students[1].company.name, "Airbus");
-
+    
     generate_company_email(students[1].company.contact_person.email, students[1].company.contact_person.first_name, students[1].company.contact_person.last_name, students[1].company.name);
     generate_hs21_email(students[1].email, students[1].first_name, students[1].last_name);
-
+    
     strcpy(students[1].company.contact_person.phone_number, "739246248");
     strcpy(students[1].company.address.city, "Hamburg");
     strcpy(students[1].company.address.street, "Kreetslag");
     strcpy(students[1].company.address.house_number, "10");
     strcpy(students[1].company.address.postal_code, "21129");
-
-
-
+    
+    
+    
     strcpy(students[2].first_name, "Jill Kendra");
     strcpy(students[2].last_name, "Hermann");
     strcpy(students[2].course_of_study, "Logistik");
@@ -109,18 +101,18 @@ void main() {
     strcpy(students[2].company.contact_person.first_name, "Hans");
     strcpy(students[2].company.contact_person.last_name, "Heinrich");
     strcpy(students[2].company.name, "Lufthansa");
-
+    
     generate_company_email(students[2].company.contact_person.email, students[2].company.contact_person.first_name, students[2].company.contact_person.last_name, students[2].company.name);
     generate_hs21_email(students[2].email, students[2].first_name, students[2].last_name);
-
+    
     strcpy(students[2].company.contact_person.phone_number, "8597243543");
     strcpy(students[2].company.address.city, "Hamburg");
     strcpy(students[2].company.address.street, "Flughafenstraße");
     strcpy(students[2].company.address.house_number, "335");
     strcpy(students[2].company.address.postal_code, "74239");
-
-
-
+    
+    
+    
     strcpy(students[3].first_name, "Max");
     strcpy(students[3].last_name, "Mustermann");
     strcpy(students[4].first_name, "Timon");
@@ -136,11 +128,137 @@ void main() {
     strcpy(students[9].first_name, "Max");
     strcpy(students[9].last_name, "Krombacher");
     
-    for (int i = 0; i < 10; i++) {
+    for (i = 0; i < 10; i++) {
         students[i].is_empty = false;
     }
-    */
 
+
+
+    //ACTUAL CODE HERE
+
+
+    //array that stores all window elements
+    windowelement windowelements[windowelement_array_length];
+
+    //index of current active element
+    int active_element = -1;
+
+    //search bar
+    windowelements[33] = make_window_element(4, 1, 7, "Filter:", 0, 0, main_color, "", "", false, false);
+    windowelements[34] = make_window_element(4, 2, 64, query, 1, 2, interactable_color, highlight_color, active_color, true, false);
+    windowelements[35] = make_window_element(70, 2, 64, query, 1, 2, interactable_color, highlight_color, active_color, false, false);
+
+    //main loop
+    while(true){
+        //verify console size
+        console_size = get_console_size();
+        if (console_size.x < 150 || console_size.y < 40) {
+            printf("%s%s%sPlease resize your console window to at least 150x40 characters.\nThe console size is currently %ix%i", ansiResetCursor, ansiRed, ansiBlackBackground, console_size.x, console_size.y);
+            continue;
+        }
+
+        //check recent inputs
+        if (kbhit()) {
+            //reset values
+            //get first char from input buffer
+            c = getch();
+            //if it's a special character
+            if (c == -32) {
+                //get the next one
+                c = getch();
+                switch (c) {
+                    case 72: //up arrow
+                        c = 'w';
+                        break;
+                    case 80: //down arrow
+                        c = 's';
+                        break;
+                    case 77: //right arrow
+                        c = 'd';
+                        break;
+                    case 75: //left arrow
+                        c = 'a';
+                        break;
+                    case 73: //PgUp
+                        if (table_entry > 0) {
+                            table_entry--; //if possible, go up
+                        }
+                        else if (table_page > 0) {
+                            table_entry = 29; //if page available, switch page
+                            table_page--;
+                        }
+                        break;
+                    case 81: //PgDn
+                        if (table_entry < 29) {
+                            table_entry++; //if possible, go down
+                        } else if (table_page < 4) {
+                            table_entry = 0; //if page available, switch page
+                            table_page++;
+                        }
+                        break;
+                    case 71: //Pos1
+                        if (table_page > 0) {
+                            table_page--; //decrease one page
+                        }
+                        break;
+                    case 79: //Ende
+                        if (table_page < 4) {
+                            table_page++; //increase page
+                        }
+                        break;
+                }
+            }
+            //if c is w, a, s or d, change highlighted element. only update if there is no active element
+            if ((c == 'w' || c == 'W' || c == 'a' || c == 'A' || c == 's' || c == 'S' || c == 'd' || c == 'D') && active_element == -1) {
+                update_highlighted_element(windowelements, windowelement_array_length, c);
+            }
+            //Enter Pressed
+            if (c == 13) {
+                for (i = 0; i < windowelement_array_length; i++) {
+                    if (windowelements[i].highlighted) {
+                        if (windowelements[i].active) {
+                            windowelements[i].active = false;
+                            active_element = -1; //deactivate
+                        }
+                        else {
+                            windowelements[i].active = true;
+                            active_element = i; //activate
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+
+        //Generate table
+        generate_table_ends(temp_table_string, false);
+        windowelements[0] = make_window_element(1, 5, 71, temp_table_string, 0, 0, main_color, "", "", false, false);
+        for (i = 0; i < 30; i++) {
+            sprintf(temp_table_string, "|%3i|%-32s|%-32s|", i + 30 * table_page, students[i + 30 * table_page].first_name, students[i + 30 * table_page].last_name);
+            windowelements[i + 1] = make_window_element(1, 6 + i, 71, temp_table_string, 0, 0, main_color, "", active_color, false, i == table_entry);
+        }
+        generate_table_ends(temp_table_string, true);
+        windowelements[31] = make_window_element(1, 36, 71, temp_table_string, 0, 0, main_color, "", "", false, false);
+        sprintf(temp_table_string, "Bild%c or Bild%c to go up/down. Pos1 or Ende to select page.   Page %i/5", 193, 194, table_page + 1);
+        windowelements[32] = make_window_element(2, 4, 69, temp_table_string, 0, 0, main_color, "", "", false, false);
+
+        
+
+        
+        render(windowelements, windowelement_array_length, main_color);
+    }
+    
+    
+    
+
+
+
+
+
+    //END OF ACTUAL CODE
 
     //test non-waiting typing - WORKS!
     //char c = 0;

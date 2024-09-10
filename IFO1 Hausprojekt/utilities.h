@@ -12,5 +12,7 @@ extern void add_file_extension(char filename[filename_length]);
 
 extern void replace_whitespace(char* string_to_change, char replacement);
 
-extern windowelement make_window_element(int column, int row, int width, const char *label, int id, int type, const char *def_col, const char *highlight_col, const char *active_col, bool is_highlighted);
-extern void update_highlighted_element(windowelement *element_array, int array_length);
+extern windowelement make_window_element(int column, int row, int width, const char *label, int id, int type, const char *def_col, const char *highlight_col, const char *active_col, bool is_highlighted, bool is_active);
+extern void update_highlighted_element(windowelement *element_array, int array_length, char c);
+
+extern void generate_table_ends(char *table_string, bool is_bottom);

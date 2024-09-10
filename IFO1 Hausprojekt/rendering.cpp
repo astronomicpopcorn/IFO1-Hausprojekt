@@ -107,6 +107,9 @@ void render(windowelement *element_array, int array_length, const char* backgrou
 						display_string[ctr] = element_array[i].label[offset];
 						
 					}
+					else if (strlen(element_array[i].label) == 0) {
+						display_string[ctr] = ' ';
+					}
 					if (offset == element_array[i].width) {
 						for (j = 0; background_color[j] != '\0'; j++) {
 							display_string[ctr] = background_color[j];

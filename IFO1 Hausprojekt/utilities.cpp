@@ -146,7 +146,7 @@ void replace_umlaute(char mystring[32], char buffer[64]){
 
 
 //builds an element. type is 0 for plain text, 1 for button, and 2 for text input.
-windowelement make_window_element(int column, int row, int width, const char *label, int id, int type, const char *def_col, const char *highlight_col, const char *active_col, bool is_highlighted) {
+windowelement make_window_element(int column, int row, int width, const char *label, int id, int type, const char *def_col, const char *highlight_col, const char *active_col, bool is_highlighted, bool is_active) {
     windowelement element;
     Vector2D pos = { column, row };
     element.position = pos;
@@ -158,117 +158,144 @@ windowelement make_window_element(int column, int row, int width, const char *la
     element.id = id;
     element.type = type;
     element.highlighted = is_highlighted;
+    element.active = is_active;
 
     return element;
 }
 
 
-
-void update_highlighted_element(windowelement *element_array, int array_length) {
-    char c;
-    int i, original_index, next_index, temp_value;
-    //if anything has been pressed, loop until input buffer is empty
-    while (kbhit()) {
-        //reset values
-        original_index = -1;
-        next_index = -1;
-        temp_value = 10000;
-        //get first char from input buffer
-        c = getch(); 
-        //loop through all elements and save first that is highlighted
+//expects w, a, s or d as char input. case insensitive
+void update_highlighted_element(windowelement *element_array, int array_length, char c) {
+    int i, original_index = -1, next_index = -1, temp_value = 1000;
+    //loop through all elements and save first that is highlighted
+    for (i = 0; i < array_length; i++) {
+        if (element_array[i].highlighted) {
+            original_index = i;
+            break;
+        }
+    }
+    //no highlighted found -> exit without changing anything
+    if (original_index == -1) {
+        return;
+    }
+    //any key for up pressed?
+    if (c == 'w' || c == 'W') {
+        //loop through all elements
         for (i = 0; i < array_length; i++) {
-            if (element_array[i].highlighted) {
-                original_index = i;
-                break;
+            //if x matches and y is less than original
+            if (element_array[i].type != 0 &&
+                element_array[i].position.x == element_array[original_index].position.x &&
+                element_array[i].position.y < element_array[original_index].position.y &&
+                element_array[original_index].position.y - element_array[i].position.y < temp_value) {
+                //update candidate index and value for comparison
+                next_index = i;
+                temp_value = element_array[original_index].position.y - element_array[i].position.y;
             }
         }
-        //no highlighted found -> exit without changing anything
-        if (original_index == -1) {
-            return;
+        //if a candidate has been found
+        if (next_index != -1) {
+            //switch highlight from old to new element
+            element_array[next_index].highlighted = true;
+            element_array[original_index].highlighted = false;
         }
-        //any key for up pressed?
-        if (c == 'w' || c == 'W') {
-            //loop through all elements
-            for (i = 0; i < array_length; i++) {
-                //if x matches and y is less than original
-                if (element_array[i].type != 0 &&
-                    element_array[i].position.x == element_array[original_index].position.x &&
-                    element_array[i].position.y < element_array[original_index].position.y &&
-                    element_array[original_index].position.y - element_array[i].position.y < temp_value) {
-                    //update candidate index and value for comparison
-                    next_index = i;
-                    temp_value = element_array[original_index].position.y - element_array[i].position.y;
-                }
-            }
-            //if a candidate has been found
-            if (next_index != -1) {
-                //switch highlight from old to new element
-                element_array[next_index].highlighted = true;
-                element_array[original_index].highlighted = false;
+    }
+    //any key for down pressed?
+    else if (c == 's' || c == 'S') {
+        //loop through all elements
+        for (i = 0; i < array_length; i++) {
+            //if x matches and y is greater than original
+            if (element_array[i].type != 0 &&
+                element_array[i].position.x == element_array[original_index].position.x &&
+                element_array[i].position.y > element_array[original_index].position.y &&
+                element_array[i].position.y - element_array[original_index].position.y < temp_value) {
+                //update candidate index and value for comparison
+                next_index = i;
+                temp_value = element_array[i].position.y - element_array[original_index].position.y;
             }
         }
-        //any key for down pressed?
-        else if (c == 's' || c == 'S') {
-            //loop through all elements
-            for (i = 0; i < array_length; i++) {
-                //if x matches and y is greater than original
-                if (element_array[i].type != 0 &&
-                    element_array[i].position.x == element_array[original_index].position.x &&
-                    element_array[i].position.y > element_array[original_index].position.y &&
-                    element_array[i].position.y - element_array[original_index].position.y < temp_value) {
-                    //update candidate index and value for comparison
-                    next_index = i;
-                    temp_value = element_array[i].position.y - element_array[original_index].position.y;
-                }
-            }
-            //if a candidate has been found
-            if (next_index != -1) {
-                //switch highlight from old to new element
-                element_array[next_index].highlighted = true;
-                element_array[original_index].highlighted = false;
+        //if a candidate has been found
+        if (next_index != -1) {
+            //switch highlight from old to new element
+            element_array[next_index].highlighted = true;
+            element_array[original_index].highlighted = false;
+        }
+    }
+    //any key for left pressed?
+    else if (c == 'a' || c == 'A') {
+        //loop through all elements
+        for (i = 0; i < array_length; i++) {
+            //if y matches and x is less than original
+            if (element_array[i].type != 0 &&
+                element_array[i].position.y == element_array[original_index].position.y &&
+                element_array[i].position.x < element_array[original_index].position.x &&
+                element_array[original_index].position.x - element_array[i].position.x < temp_value) {
+                //update candidate index and value for comparison
+                next_index = i;
+                temp_value = element_array[original_index].position.x - element_array[i].position.x;
             }
         }
-        //any key for left pressed?
-        else if (c == 'a' || c == 'A') {
-            //loop through all elements
-            for (i = 0; i < array_length; i++) {
-                //if y matches and x is less than original
-                if (element_array[i].type != 0 &&
-                    element_array[i].position.y == element_array[original_index].position.y &&
-                    element_array[i].position.x < element_array[original_index].position.x &&
-                    element_array[original_index].position.x - element_array[i].position.x < temp_value) {
-                    //update candidate index and value for comparison
-                    next_index = i;
-                    temp_value = element_array[original_index].position.x - element_array[i].position.x;
-                }
-            }
-            //if a candidate has been found
-            if (next_index != -1) {
-                //switch highlight from old to new element
-                element_array[next_index].highlighted = true;
-                element_array[original_index].highlighted = false;
+        //if a candidate has been found
+        if (next_index != -1) {
+            //switch highlight from old to new element
+            element_array[next_index].highlighted = true;
+            element_array[original_index].highlighted = false;
+        }
+    }
+    //any key for right pressed?
+    else if (c == 'd' || c == 'D') {
+        //loop through all elements
+        for (i = 0; i < array_length; i++) {
+            //if y matches and x is greater than original
+            if (element_array[i].type != 0 &&
+                element_array[i].position.y == element_array[original_index].position.y &&
+                element_array[i].position.x > element_array[original_index].position.x &&
+                element_array[i].position.x - element_array[original_index].position.x < temp_value) {
+                //update candidate index and value for comparison
+                next_index = i;
+                temp_value = element_array[i].position.x - element_array[original_index].position.x;
             }
         }
-        //any key for right pressed?
-        else if (c == 'd' || c == 'D') {
-            //loop through all elements
-            for (i = 0; i < array_length; i++) {
-                //if y matches and x is greater than original
-                if (element_array[i].type != 0 &&
-                    element_array[i].position.y == element_array[original_index].position.y &&
-                    element_array[i].position.x > element_array[original_index].position.x &&
-                    element_array[i].position.x - element_array[original_index].position.x < temp_value) {
-                    //update candidate index and value for comparison
-                    next_index = i;
-                    temp_value = element_array[i].position.x - element_array[original_index].position.x;
-                }
-            }
-            //if a candidate has been found
-            if (next_index != -1) {
-                //switch highlight from old to new element
-                element_array[next_index].highlighted = true;
-                element_array[original_index].highlighted = false;
-            }
+        //if a candidate has been found
+        if (next_index != -1) {
+            //switch highlight from old to new element
+            element_array[next_index].highlighted = true;
+            element_array[original_index].highlighted = false;
         }
+    }
+}
+
+void generate_table_ends(char* table_string, bool is_bottom) {
+    int i;
+    if (!is_bottom) {
+        table_string[0] = 218;
+        for (i = 1; i <= 3; i++) {
+            table_string[i] = 196;
+        }
+        table_string[4] = 194;
+        for (i = 5; i <= 36; i++) {
+            table_string[i] = 196;
+        }
+        table_string[37] = 194;
+        for (i = 38; i <= 69; i++) {
+            table_string[i] = 196;
+        }
+        table_string[70] = 191;
+        table_string[71] = '\0';
+    }
+    else {
+        table_string[0] = 192;
+        for (i = 1; i <= 3; i++) {
+            table_string[i] = 196;
+        }
+        table_string[4] = 193;
+        for (i = 5; i <= 36; i++) {
+            table_string[i] = 196;
+        }
+        table_string[37] = 193;
+        for (i = 38; i <= 69; i++) {
+            table_string[i] = 196;
+        }
+        table_string[70] = 217;
+        table_string[71] = '\0';
     }
 }
