@@ -1,6 +1,7 @@
 #include "datastructures.h"
 #include "constants.h"
 #include "windowinteractions.h"
+#include "datamodification.h"
 
 #include <ctype.h>
 #include <windows.h>
@@ -309,7 +310,7 @@ void update_string(char *target_string, int target_string_max_length, char c) {
         }
     }
     //printable character
-    else if ((c >= 32 && c <= 90) || (c >= 97 && c <= 122) || (c >= 128 && c <= 237)) {
+    else if ((c >= 32 && c <= 90) || (c >= 97 && c <= 122)) {
         if (current_length < target_string_max_length - 1) {
             target_string[current_length] = c;
             target_string[current_length + 1] = '\0';
@@ -317,13 +318,90 @@ void update_string(char *target_string, int target_string_max_length, char c) {
     }
 }
 
-void update_windowelements_labels(windowelement *element_array, student *student_array, int student_index) {
+void update_student_data(student *student_array, int student_index, int element_index, char c) {
+    switch (element_index) {
+        case 36:
+            update_string(student_array[student_index].first_name, first_name_length, c);
+            break;
+        case 38:
+            update_string(student_array[student_index].student_number, student_number_length, c);
+            break;
+        case 40:
+            update_string(student_array[student_index].phone_number, phone_number_length, c);
+            break;
+        case 42:
+            update_string(student_array[student_index].home_address.street, street_name_length, c);
+            break;
+        case 44:
+            update_string(student_array[student_index].home_address.postal_code, postal_code_length, c);
+            break;
+
+        case 48:
+            update_string(student_array[student_index].company.name, company_name_length, c);
+            break;
+        case 50:
+            update_string(student_array[student_index].company.address.street, street_name_length, c);
+            break;
+        case 52:
+            update_string(student_array[student_index].company.address.postal_code, postal_code_length, c);
+            break;
+        case 54:
+            update_string(student_array[student_index].company.contact_person.first_name, first_name_length, c);
+            break;
+
+        case 58:
+            update_string(student_array[student_index].company.contact_person.phone_number, phone_number_length, c);
+            break;
+        case 60:
+            update_string(student_array[student_index].last_name, last_name_length, c);
+            break;
+        case 62:
+            update_string(student_array[student_index].course_of_study, course_of_study_length, c);
+            break;
+        case 64:
+            update_string(student_array[student_index].enrollment_year, enrollment_year_length, c);
+            break;
+        case 66:
+            update_string(student_array[student_index].home_address.house_number, house_number_length, c);
+            break;
+        case 68:
+            update_string(student_array[student_index].home_address.city, city_name_length, c);
+            break;
+        case 70:
+            update_string(student_array[student_index].company.address.house_number, house_number_length, c);
+            break;
+        case 72:
+            update_string(student_array[student_index].company.address.city, city_name_length, c);
+            break;
+        case 74:
+            update_string(student_array[student_index].company.contact_person.last_name, last_name_length, c);
+            break;
+    }
+    generate_hs21_email(student_array[student_index].email, student_array[student_index].first_name, student_array[student_index].last_name);
+    generate_company_email(student_array[student_index].company.contact_person.email, student_array[student_index].company.contact_person.first_name, student_array[student_index].company.contact_person.last_name, student_array[student_index].company.name);
+}
+
+void update_windowelements_labels(windowelement *element_array, student *student_array, int student_index, char *on_color, char *off_color) {
     int i;
     if (student_index == -1) {
         for (i = 36; i <= 74; i += 2) {
             strcpy(element_array[i].label, "");
+            if (i != 46 && i != 56) {
+                strcpy(element_array[i].default_color, off_color);
+                element_array[i].type = 0;
+            }
         }
         return;
+    }
+    //check if they are disabled
+    if (element_array[36].type == 0) {
+        for (i = 36; i <= 74; i += 2) {
+            if (i != 46 && i != 56) {
+                //reactivate
+                strcpy(element_array[i].default_color, on_color);
+                element_array[i].type = 2;
+            }
+        }
     }
 
 
@@ -350,4 +428,76 @@ void update_windowelements_labels(windowelement *element_array, student *student
     strcpy(element_array[70].label, selected_student.company.address.house_number);
     strcpy(element_array[72].label, selected_student.company.address.city);
     strcpy(element_array[74].label, selected_student.company.contact_person.last_name);
+}
+
+void initialize_windowelements(windowelement *element_array, char *main_color, char *interactable_color, char *highlight_color, char *active_color) {
+    //info display column 1
+    element_array[35] = make_window_element(75, 2, 16, "    First Name:", 0, 0, main_color, "", "", false, false);
+    element_array[36] = make_window_element(92, 2, first_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[37] = make_window_element(75, 4, 16, "Student number:", 0, 0, main_color, "", "", false, false);
+    element_array[38] = make_window_element(92, 4, student_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[39] = make_window_element(75, 6, 16, "     Telephone:", 0, 0, main_color, "", "", false, false);
+    element_array[40] = make_window_element(92, 6, phone_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[41] = make_window_element(75, 8, 16, "        Street:", 0, 0, main_color, "", "", false, false);
+    element_array[42] = make_window_element(92, 8, street_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[43] = make_window_element(75, 10, 16, "   Postal code:", 0, 0, main_color, "", "", false, false);
+    element_array[44] = make_window_element(92, 10, postal_code_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[45] = make_window_element(75, 12, 16, "        E-Mail:", 0, 0, main_color, "", "", false, false);
+    element_array[46] = make_window_element(92, 12, email_length, "", 0, 0, main_color, "", "", false, false);
+
+    element_array[47] = make_window_element(75, 16, 16, "       Company:", 0, 0, main_color, "", "", false, false);
+    element_array[48] = make_window_element(92, 16, company_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[49] = make_window_element(75, 18, 16, "        Street:", 0, 0, main_color, "", "", false, false);
+    element_array[50] = make_window_element(92, 18, street_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[51] = make_window_element(75, 20, 16, "   Postal Code:", 0, 0, main_color, "", "", false, false);
+    element_array[52] = make_window_element(92, 20, postal_code_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[53] = make_window_element(75, 24, 16, "    First Name:", 0, 0, main_color, "", "", false, false);
+    element_array[54] = make_window_element(92, 24, first_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[55] = make_window_element(75, 26, 16, "        E-Mail:", 0, 0, main_color, "", "", false, false);
+    element_array[56] = make_window_element(92, 26, email_length, "", 0, 0, main_color, "", "", false, false);
+
+    element_array[57] = make_window_element(75, 28, 16, "    Telephone:", 0, 0, main_color, "", "", false, false);
+    element_array[58] = make_window_element(92, 28, phone_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+
+    //info display column 2
+
+    element_array[59] = make_window_element(126, 2, 16, "     Last Name:", 0, 0, main_color, "", "", false, false);
+    element_array[60] = make_window_element(143, 2, last_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[61] = make_window_element(126, 4, 16, "        Course:", 0, 0, main_color, "", "", false, false);
+    element_array[62] = make_window_element(143, 4, course_of_study_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[63] = make_window_element(126, 6, 16, "          Year:", 0, 0, main_color, "", "", false, false);
+    element_array[64] = make_window_element(143, 6, enrollment_year_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[65] = make_window_element(126, 8, 16, "  House Number:", 0, 0, main_color, "", "", false, false);
+    element_array[66] = make_window_element(143, 8, house_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[67] = make_window_element(126, 10, 16, "          City:", 0, 0, main_color, "", "", false, false);
+    element_array[68] = make_window_element(143, 10, city_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[69] = make_window_element(126, 18, 16, "  House Number:", 0, 0, main_color, "", "", false, false);
+    element_array[70] = make_window_element(143, 18, house_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[71] = make_window_element(126, 20, 16, "          City:", 0, 0, main_color, "", "", false, false);
+    element_array[72] = make_window_element(143, 20, city_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    element_array[73] = make_window_element(126, 24, 16, "     Last Name:", 0, 0, main_color, "", "", false, false);
+    element_array[74] = make_window_element(143, 24, last_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    //info display dividers
+
+    element_array[75] = make_window_element(76, 14, 100, "--------------------------------------- Company Information ---------------------------------------", 0, 0, main_color, "", "", false, false);
+    element_array[76] = make_window_element(76, 22, 100, "-------------------------------- Company Contact Person Information -------------------------------", 0, 0, main_color, "", "", false, false);
+
 }

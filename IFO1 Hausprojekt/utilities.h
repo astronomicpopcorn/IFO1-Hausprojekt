@@ -18,5 +18,7 @@ extern void update_highlighted_element(windowelement *element_array, int array_l
 extern void generate_table_ends(char *table_string, bool is_bottom);
 
 extern void update_string(char *target_string, int target_string_max_length, char c);
+extern void update_student_data(student *student_array, int student_index, int element_index, char c);
 
-extern void update_windowelements_labels(windowelement *element_array, student *student_array, int student_index);
+extern void update_windowelements_labels(windowelement *element_array, student *student_array, int student_index, char *on_color, char *off_color);
+extern void initialize_windowelements(windowelement *element_array, char* main_color, char* interactable_color, char* highlight_color, char* active_color);

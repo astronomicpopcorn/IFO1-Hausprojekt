@@ -19,6 +19,7 @@ void main() {
     char highlight_color[] = "\033[103m\033[30m";
     char active_color[] = "\033[102m\033[30m";
     char table_highlighted_color[] = "\033[107m\033[34m";
+    char disabled_color[] = "\033[101m\033[30m";
 
     short int matching_indices[dataset_size]; //used for search function to store indeces of matching entries
     student students[dataset_size]; //main array
@@ -154,72 +155,7 @@ void main() {
     windowelements[33] = make_window_element(4, 1, 7, "Filter:", 0, 0, main_color, "", "", false, false);
     windowelements[34] = make_window_element(4, 2, 64, query, 1, 2, interactable_color, highlight_color, active_color, true, false);
 
-    //info display column 1
-    windowelements[35] = make_window_element(75, 2, 16, "    First Name:", 0, 0, main_color, "", "", false, false);
-    windowelements[36] = make_window_element(92, 2, first_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[37] = make_window_element(75, 4, 16, "Student number:", 0, 0, main_color, "", "", false, false);
-    windowelements[38] = make_window_element(92, 4, student_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[39] = make_window_element(75, 6, 16, "     Telephone:", 0, 0, main_color, "", "", false, false);
-    windowelements[40] = make_window_element(92, 6, phone_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[41] = make_window_element(75, 8, 16, "        Street:", 0, 0, main_color, "", "", false, false);
-    windowelements[42] = make_window_element(92, 8, street_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[43] = make_window_element(75, 10, 16, "   Postal code:", 0, 0, main_color, "", "", false, false);
-    windowelements[44] = make_window_element(92, 10, postal_code_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[45] = make_window_element(75, 12, 16, "        E-Mail:", 0, 0, main_color, "", "", false, false);
-    windowelements[46] = make_window_element(92, 12, email_length, "", 0, 0, main_color, "", "", false, false);
-
-    windowelements[47] = make_window_element(75, 16, 16, "       Company:", 0, 0, main_color, "", "", false, false);
-    windowelements[48] = make_window_element(92, 16, company_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[49] = make_window_element(75, 18, 16, "        Street:", 0, 0, main_color, "", "", false, false);
-    windowelements[50] = make_window_element(92, 18, street_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[51] = make_window_element(75, 20, 16, "   Postal Code:", 0, 0, main_color, "", "", false, false);
-    windowelements[52] = make_window_element(92, 20, postal_code_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[53] = make_window_element(75, 24, 16, "    First Name:", 0, 0, main_color, "", "", false, false);
-    windowelements[54] = make_window_element(92, 24, first_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[55] = make_window_element(75, 26, 16, "        E-Mail:", 0, 0, main_color, "", "", false, false);
-    windowelements[56] = make_window_element(92, 26, email_length, "", 0, 0, main_color, "", "", false, false);
-
-    windowelements[57] = make_window_element(75, 28, 16, "    Telephone:", 0, 0, main_color, "", "", false, false);
-    windowelements[58] = make_window_element(92, 28, phone_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-
-    //info display column 2
-
-    windowelements[59] = make_window_element(126, 2, 16, "     Last Name:", 0, 0, main_color, "", "", false, false);
-    windowelements[60] = make_window_element(143, 2, last_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[61] = make_window_element(126, 4, 16, "        Course:", 0, 0, main_color, "", "", false, false);
-    windowelements[62] = make_window_element(143, 4, course_of_study_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[63] = make_window_element(126, 6, 16, "          Year:", 0, 0, main_color, "", "", false, false);
-    windowelements[64] = make_window_element(143, 6, enrollment_year_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[65] = make_window_element(126, 8, 16, "  House Number:", 0, 0, main_color, "", "", false, false);
-    windowelements[66] = make_window_element(143, 8, house_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[67] = make_window_element(126, 10, 16, "          City:", 0, 0, main_color, "", "", false, false);
-    windowelements[68] = make_window_element(143, 10, city_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[69] = make_window_element(126, 18, 16, "  House Number:", 0, 0, main_color, "", "", false, false);
-    windowelements[70] = make_window_element(143, 18, house_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[71] = make_window_element(126, 20, 16, "          City:", 0, 0, main_color, "", "", false, false);
-    windowelements[72] = make_window_element(143, 20, city_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-    windowelements[73] = make_window_element(126, 24, 16, "     Last Name:", 0, 0, main_color, "", "", false, false);
-    windowelements[74] = make_window_element(143, 24, last_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
-
-
-
+    initialize_windowelements(windowelements, main_color, interactable_color, highlight_color, active_color);
 
     //main loop
     while(true){
@@ -240,10 +176,15 @@ void main() {
             //if any element of type 2 is active
             if (active_element > 0 && windowelements[active_element].type == 2) {
                 if (c == -32) {
-                    getch();
+                    getch(); //remove special characters
                 }
                 else {
-                    update_string(query, 128, c);
+                    if (active_element == 34) {
+                        update_string(query, query_length, c);
+                    }
+                    else {
+                        update_student_data(students, current_selected_entry, active_element, c);
+                    }
                 }
             }
             else {
@@ -340,7 +281,7 @@ void main() {
 
         strcpy(windowelements[34].label, query);
         
-        update_windowelements_labels(windowelements, students, current_selected_entry);
+        update_windowelements_labels(windowelements, students, current_selected_entry, interactable_color, disabled_color);
         
         render(windowelements, windowelement_array_length, main_color);
     }
