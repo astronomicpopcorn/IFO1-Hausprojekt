@@ -299,3 +299,55 @@ void generate_table_ends(char* table_string, bool is_bottom) {
         table_string[71] = '\0';
     }
 }
+
+//adds a char to the end of a string. unless it is backspace, then it makes the string shorter.
+void update_string(char *target_string, int target_string_max_length, char c) {
+    int current_length = strlen(target_string);
+    if (c == 8) { //backspace
+        if (current_length > 0) {
+            target_string[current_length - 1] = '\0';
+        }
+    }
+    //printable character
+    else if ((c >= 32 && c <= 90) || (c >= 97 && c <= 122) || (c >= 128 && c <= 237)) {
+        if (current_length < target_string_max_length - 1) {
+            target_string[current_length] = c;
+            target_string[current_length + 1] = '\0';
+        }
+    }
+}
+
+void update_windowelements_labels(windowelement *element_array, student *student_array, int student_index) {
+    int i;
+    if (student_index == -1) {
+        for (i = 36; i <= 74; i += 2) {
+            strcpy(element_array[i].label, "");
+        }
+        return;
+    }
+
+
+    student selected_student = student_array[student_index];
+
+    strcpy(element_array[36].label, selected_student.first_name);
+    strcpy(element_array[38].label, selected_student.student_number);
+    strcpy(element_array[40].label, selected_student.phone_number);
+    strcpy(element_array[42].label, selected_student.home_address.street);
+    strcpy(element_array[44].label, selected_student.home_address.postal_code);
+    strcpy(element_array[46].label, selected_student.email);
+    strcpy(element_array[48].label, selected_student.company.name);
+    strcpy(element_array[50].label, selected_student.company.address.street);
+    strcpy(element_array[52].label, selected_student.company.address.postal_code);
+    strcpy(element_array[54].label, selected_student.company.contact_person.first_name);
+    strcpy(element_array[56].label, selected_student.company.contact_person.email);
+    strcpy(element_array[58].label, selected_student.company.contact_person.phone_number);
+
+    strcpy(element_array[60].label, selected_student.last_name);
+    strcpy(element_array[62].label, selected_student.course_of_study);
+    strcpy(element_array[64].label, selected_student.enrollment_year);
+    strcpy(element_array[66].label, selected_student.home_address.house_number);
+    strcpy(element_array[68].label, selected_student.home_address.city);
+    strcpy(element_array[70].label, selected_student.company.address.house_number);
+    strcpy(element_array[72].label, selected_student.company.address.city);
+    strcpy(element_array[74].label, selected_student.company.contact_person.last_name);
+}

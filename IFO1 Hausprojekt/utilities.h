@@ -16,3 +16,7 @@ extern windowelement make_window_element(int column, int row, int width, const c
 extern void update_highlighted_element(windowelement *element_array, int array_length, char c);
 
 extern void generate_table_ends(char *table_string, bool is_bottom);
+
+extern void update_string(char *target_string, int target_string_max_length, char c);
+
+extern void update_windowelements_labels(windowelement *element_array, student *student_array, int student_index);

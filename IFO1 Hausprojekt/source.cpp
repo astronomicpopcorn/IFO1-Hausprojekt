@@ -18,14 +18,18 @@ void main() {
     char interactable_color[] = "\033[47m\033[30m";
     char highlight_color[] = "\033[103m\033[30m";
     char active_color[] = "\033[102m\033[30m";
+    char table_highlighted_color[] = "\033[107m\033[34m";
 
     short int matching_indices[dataset_size]; //used for search function to store indeces of matching entries
     student students[dataset_size]; //main array
 
     Vector2D console_size;
 
+    //random temporary variables for loops and the like
+    int i, j, k, l, m, n;
+
     //variables for table control
-    int i, table_page = 0, table_entry = 0;
+    int table_page = 0, table_entry = 0;
     char temp_table_string[72];
     
     char c; //stores recent inputs
@@ -143,74 +147,156 @@ void main() {
     //index of current active element
     int active_element = -1;
 
+    //stores index into student array based on selected table entry
+    int current_selected_entry = -1;
+
     //search bar
     windowelements[33] = make_window_element(4, 1, 7, "Filter:", 0, 0, main_color, "", "", false, false);
     windowelements[34] = make_window_element(4, 2, 64, query, 1, 2, interactable_color, highlight_color, active_color, true, false);
-    windowelements[35] = make_window_element(70, 2, 64, query, 1, 2, interactable_color, highlight_color, active_color, false, false);
+
+    //info display column 1
+    windowelements[35] = make_window_element(75, 2, 16, "    First Name:", 0, 0, main_color, "", "", false, false);
+    windowelements[36] = make_window_element(92, 2, first_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[37] = make_window_element(75, 4, 16, "Student number:", 0, 0, main_color, "", "", false, false);
+    windowelements[38] = make_window_element(92, 4, student_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[39] = make_window_element(75, 6, 16, "     Telephone:", 0, 0, main_color, "", "", false, false);
+    windowelements[40] = make_window_element(92, 6, phone_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[41] = make_window_element(75, 8, 16, "        Street:", 0, 0, main_color, "", "", false, false);
+    windowelements[42] = make_window_element(92, 8, street_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[43] = make_window_element(75, 10, 16, "   Postal code:", 0, 0, main_color, "", "", false, false);
+    windowelements[44] = make_window_element(92, 10, postal_code_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[45] = make_window_element(75, 12, 16, "        E-Mail:", 0, 0, main_color, "", "", false, false);
+    windowelements[46] = make_window_element(92, 12, email_length, "", 0, 0, main_color, "", "", false, false);
+
+    windowelements[47] = make_window_element(75, 16, 16, "       Company:", 0, 0, main_color, "", "", false, false);
+    windowelements[48] = make_window_element(92, 16, company_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[49] = make_window_element(75, 18, 16, "        Street:", 0, 0, main_color, "", "", false, false);
+    windowelements[50] = make_window_element(92, 18, street_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[51] = make_window_element(75, 20, 16, "   Postal Code:", 0, 0, main_color, "", "", false, false);
+    windowelements[52] = make_window_element(92, 20, postal_code_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[53] = make_window_element(75, 24, 16, "    First Name:", 0, 0, main_color, "", "", false, false);
+    windowelements[54] = make_window_element(92, 24, first_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[55] = make_window_element(75, 26, 16, "        E-Mail:", 0, 0, main_color, "", "", false, false);
+    windowelements[56] = make_window_element(92, 26, email_length, "", 0, 0, main_color, "", "", false, false);
+
+    windowelements[57] = make_window_element(75, 28, 16, "    Telephone:", 0, 0, main_color, "", "", false, false);
+    windowelements[58] = make_window_element(92, 28, phone_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+
+    //info display column 2
+
+    windowelements[59] = make_window_element(126, 2, 16, "     Last Name:", 0, 0, main_color, "", "", false, false);
+    windowelements[60] = make_window_element(143, 2, last_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[61] = make_window_element(126, 4, 16, "        Course:", 0, 0, main_color, "", "", false, false);
+    windowelements[62] = make_window_element(143, 4, course_of_study_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[63] = make_window_element(126, 6, 16, "          Year:", 0, 0, main_color, "", "", false, false);
+    windowelements[64] = make_window_element(143, 6, enrollment_year_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[65] = make_window_element(126, 8, 16, "  House Number:", 0, 0, main_color, "", "", false, false);
+    windowelements[66] = make_window_element(143, 8, house_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[67] = make_window_element(126, 10, 16, "          City:", 0, 0, main_color, "", "", false, false);
+    windowelements[68] = make_window_element(143, 10, city_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[69] = make_window_element(126, 18, 16, "  House Number:", 0, 0, main_color, "", "", false, false);
+    windowelements[70] = make_window_element(143, 18, house_number_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[71] = make_window_element(126, 20, 16, "          City:", 0, 0, main_color, "", "", false, false);
+    windowelements[72] = make_window_element(143, 20, city_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+    windowelements[73] = make_window_element(126, 24, 16, "     Last Name:", 0, 0, main_color, "", "", false, false);
+    windowelements[74] = make_window_element(143, 24, last_name_length, "", 0, 2, interactable_color, highlight_color, active_color, false, false);
+
+
+
 
     //main loop
     while(true){
-        //verify console size
+        /*verify console size
         console_size = get_console_size();
         if (console_size.x < 150 || console_size.y < 40) {
             printf("%s%s%sPlease resize your console window to at least 150x40 characters.\nThe console size is currently %ix%i", ansiResetCursor, ansiRed, ansiBlackBackground, console_size.x, console_size.y);
             continue;
         }
+        */
 
         //check recent inputs
         if (kbhit()) {
             //reset values
             //get first char from input buffer
             c = getch();
-            //if it's a special character
-            if (c == -32) {
-                //get the next one
-                c = getch();
-                switch (c) {
-                    case 72: //up arrow
-                        c = 'w';
-                        break;
-                    case 80: //down arrow
-                        c = 's';
-                        break;
-                    case 77: //right arrow
-                        c = 'd';
-                        break;
-                    case 75: //left arrow
-                        c = 'a';
-                        break;
-                    case 73: //PgUp
-                        if (table_entry > 0) {
-                            table_entry--; //if possible, go up
-                        }
-                        else if (table_page > 0) {
-                            table_entry = 29; //if page available, switch page
-                            table_page--;
-                        }
-                        break;
-                    case 81: //PgDn
-                        if (table_entry < 29) {
-                            table_entry++; //if possible, go down
-                        } else if (table_page < 4) {
-                            table_entry = 0; //if page available, switch page
-                            table_page++;
-                        }
-                        break;
-                    case 71: //Pos1
-                        if (table_page > 0) {
-                            table_page--; //decrease one page
-                        }
-                        break;
-                    case 79: //Ende
-                        if (table_page < 4) {
-                            table_page++; //increase page
-                        }
-                        break;
+
+            //if any element of type 2 is active
+            if (active_element > 0 && windowelements[active_element].type == 2) {
+                if (c == -32) {
+                    getch();
+                }
+                else {
+                    update_string(query, 128, c);
                 }
             }
-            //if c is w, a, s or d, change highlighted element. only update if there is no active element
-            if ((c == 'w' || c == 'W' || c == 'a' || c == 'A' || c == 's' || c == 'S' || c == 'd' || c == 'D') && active_element == -1) {
-                update_highlighted_element(windowelements, windowelement_array_length, c);
+            else {
+
+                //if it's a special character
+                if (c == -32) {
+                    //get the next one
+                    c = getch();
+                    switch (c) {
+                        case 72: //up arrow
+                            c = 'w';
+                            break;
+                        case 80: //down arrow
+                            c = 's';
+                            break;
+                        case 77: //right arrow
+                            c = 'd';
+                            break;
+                        case 75: //left arrow
+                            c = 'a';
+                            break;
+                        case 73: //PgUp
+                            if (table_entry > 0) {
+                                table_entry--; //if possible, go up
+                            } else if (table_page > 0) {
+                                table_entry = 29; //if page available, switch page
+                                table_page--;
+                            }
+                            break;
+                        case 81: //PgDn
+                            if (table_entry < 29) {
+                                table_entry++; //if possible, go down
+                            } else if (table_page < 4) {
+                                table_entry = 0; //if page available, switch page
+                                table_page++;
+                            }
+                            break;
+                        case 71: //Pos1
+                            if (table_page > 0) {
+                                table_page--; //decrease one page
+                            }
+                            break;
+                        case 79: //Ende
+                            if (table_page < 4) {
+                                table_page++; //increase page
+                            }
+                            break;
+                    }
+                }
+                //if c is w, a, s or d, change highlighted element. only update if there is no active element
+                if ((c == 'w' || c == 'W' || c == 'a' || c == 'A' || c == 's' || c == 'S' || c == 'd' || c == 'D') && active_element == -1) {
+                    update_highlighted_element(windowelements, windowelement_array_length, c);
+                }
             }
             //Enter Pressed
             if (c == 13) {
@@ -219,8 +305,7 @@ void main() {
                         if (windowelements[i].active) {
                             windowelements[i].active = false;
                             active_element = -1; //deactivate
-                        }
-                        else {
+                        } else {
                             windowelements[i].active = true;
                             active_element = i; //activate
                         }
@@ -230,23 +315,32 @@ void main() {
             }
         }
 
-
-
+        //filter entire database with query
+        search_dataset(students, query, matching_indices);
+        current_selected_entry = matching_indices[table_entry + 30 * table_page];
 
         //Generate table
         generate_table_ends(temp_table_string, false);
         windowelements[0] = make_window_element(1, 5, 71, temp_table_string, 0, 0, main_color, "", "", false, false);
         for (i = 0; i < 30; i++) {
-            sprintf(temp_table_string, "|%3i|%-32s|%-32s|", i + 30 * table_page, students[i + 30 * table_page].first_name, students[i + 30 * table_page].last_name);
-            windowelements[i + 1] = make_window_element(1, 6 + i, 71, temp_table_string, 0, 0, main_color, "", active_color, false, i == table_entry);
+            n = matching_indices[i + 30 * table_page];
+            if (n != -1) {
+                sprintf(temp_table_string, "|%3i|%-32s|%-32s|", n, students[n].first_name, students[n].last_name);
+            }
+            else {
+                sprintf(temp_table_string, "| - |%-32s|%-32s|", "", "");
+            }
+            
+            windowelements[i + 1] = make_window_element(1, 6 + i, 71, temp_table_string, 0, 0, main_color, "", table_highlighted_color, false, i == table_entry);
         }
         generate_table_ends(temp_table_string, true);
         windowelements[31] = make_window_element(1, 36, 71, temp_table_string, 0, 0, main_color, "", "", false, false);
         sprintf(temp_table_string, "Bild%c or Bild%c to go up/down. Pos1 or Ende to select page.   Page %i/5", 193, 194, table_page + 1);
         windowelements[32] = make_window_element(2, 4, 69, temp_table_string, 0, 0, main_color, "", "", false, false);
 
+        strcpy(windowelements[34].label, query);
         
-
+        update_windowelements_labels(windowelements, students, current_selected_entry);
         
         render(windowelements, windowelement_array_length, main_color);
     }

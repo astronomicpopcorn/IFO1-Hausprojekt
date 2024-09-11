@@ -71,6 +71,13 @@ bool search_datapoint(struct student *student, char _query[query_length]) {
 int search_dataset(student students[dataset_size], char query[query_length], short int list_of_matching_indices[dataset_size]) {
     int num_of_matches = 0;
     int p = 0; //points to position in list_of_matching_indices
+    if (strlen(query) == 0) {
+        for (p = 0; p < dataset_size; p++) {
+            list_of_matching_indices[p] = p;
+        }
+        return 150;
+    }
+
     for (int i = 0; i < dataset_size; i++) {
         if (search_datapoint(&students[i], query)) {
             list_of_matching_indices[p] = i;
