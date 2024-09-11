@@ -38,110 +38,6 @@ void main() {
     //search query
     char query[query_length] = "";
 
-
-
-
-    //set some random students
-
-    strcpy(students[0].first_name, "Nick");
-    strcpy(students[0].last_name, "Winter");
-    strcpy(students[0].course_of_study, "Mechatronik");
-    strcpy(students[0].phone_number, "4915151727981");
-    strcpy(students[0].enrollment_year, "2023");
-    strcpy(students[0].student_number, "202050");
-    strcpy(students[0].home_address.city, "Buxtehude");
-    strcpy(students[0].home_address.street, "Estebrügger Straße");
-    strcpy(students[0].home_address.house_number, "31A");
-    strcpy(students[0].home_address.postal_code, "21614");
-    strcpy(students[0].company.contact_person.first_name, "Rafael");
-    strcpy(students[0].company.contact_person.last_name, "Götzen");
-    strcpy(students[0].company.name, "Airbus");
-    
-    generate_company_email(students[0].company.contact_person.email, students[0].company.contact_person.first_name, students[0].company.contact_person.last_name, students[0].company.name);
-    generate_hs21_email(students[0].email, students[0].first_name, students[0].last_name);
-    
-    strcpy(students[0].company.contact_person.phone_number, "1234567890");
-    strcpy(students[0].company.address.city, "Hamburg");
-    strcpy(students[0].company.address.street, "Kreetslag");
-    strcpy(students[0].company.address.house_number, "10");
-    strcpy(students[0].company.address.postal_code, "21129");
-    
-    
-    
-    strcpy(students[1].first_name, "Ole");
-    strcpy(students[1].last_name, "Spindelndreher");
-    strcpy(students[1].course_of_study, "Mechatronik");
-    strcpy(students[1].phone_number, "4915151727981");
-    strcpy(students[1].enrollment_year, "2023");
-    strcpy(students[1].student_number, "02050");
-    strcpy(students[1].home_address.city, "Estebrügge");
-    strcpy(students[1].home_address.street, "Bahnhofsstraße");
-    strcpy(students[1].home_address.house_number, "76");
-    strcpy(students[1].home_address.postal_code, "21614");
-    strcpy(students[1].company.contact_person.first_name, "Martin");
-    strcpy(students[1].company.contact_person.last_name, "Möhre");
-    strcpy(students[1].company.name, "Airbus");
-    
-    generate_company_email(students[1].company.contact_person.email, students[1].company.contact_person.first_name, students[1].company.contact_person.last_name, students[1].company.name);
-    generate_hs21_email(students[1].email, students[1].first_name, students[1].last_name);
-    
-    strcpy(students[1].company.contact_person.phone_number, "739246248");
-    strcpy(students[1].company.address.city, "Hamburg");
-    strcpy(students[1].company.address.street, "Kreetslag");
-    strcpy(students[1].company.address.house_number, "10");
-    strcpy(students[1].company.address.postal_code, "21129");
-    
-    
-    
-    strcpy(students[2].first_name, "Jill Kendra");
-    strcpy(students[2].last_name, "Hermann");
-    strcpy(students[2].course_of_study, "Logistik");
-    strcpy(students[2].phone_number, "4915151727981");
-    strcpy(students[2].enrollment_year, "2023");
-    strcpy(students[2].student_number, "202050");
-    strcpy(students[2].home_address.city, "Hamburg");
-    strcpy(students[2].home_address.street, "Linker Weg");
-    strcpy(students[2].home_address.house_number, "12");
-    strcpy(students[2].home_address.postal_code, "21614");
-    strcpy(students[2].company.contact_person.first_name, "Hans");
-    strcpy(students[2].company.contact_person.last_name, "Heinrich");
-    strcpy(students[2].company.name, "Lufthansa");
-    
-    generate_company_email(students[2].company.contact_person.email, students[2].company.contact_person.first_name, students[2].company.contact_person.last_name, students[2].company.name);
-    generate_hs21_email(students[2].email, students[2].first_name, students[2].last_name);
-    
-    strcpy(students[2].company.contact_person.phone_number, "8597243543");
-    strcpy(students[2].company.address.city, "Hamburg");
-    strcpy(students[2].company.address.street, "Flughafenstraße");
-    strcpy(students[2].company.address.house_number, "335");
-    strcpy(students[2].company.address.postal_code, "74239");
-    
-    
-    
-    strcpy(students[3].first_name, "Max");
-    strcpy(students[3].last_name, "Mustermann");
-    strcpy(students[4].first_name, "Timon");
-    strcpy(students[4].last_name, "Trompete");
-    strcpy(students[5].first_name, "Alexander");
-    strcpy(students[5].last_name, "Müller");
-    strcpy(students[6].first_name, "Jean Jaques");
-    strcpy(students[6].last_name, "Mustermann");
-    strcpy(students[7].first_name, "Florian");
-    strcpy(students[7].last_name, "Flöte");
-    strcpy(students[8].first_name, "Martin");
-    strcpy(students[8].last_name, "von Margarine");
-    strcpy(students[9].first_name, "Max");
-    strcpy(students[9].last_name, "Krombacher");
-    
-    for (i = 0; i < 10; i++) {
-        students[i].is_empty = false;
-    }
-
-
-
-    //ACTUAL CODE HERE
-
-
     //array that stores all window elements
     windowelement windowelements[windowelement_array_length];
 
@@ -159,17 +55,9 @@ void main() {
 
     //main loop
     while(true){
-        /*verify console size
-        console_size = get_console_size();
-        if (console_size.x < 150 || console_size.y < 40) {
-            printf("%s%s%sPlease resize your console window to at least 150x40 characters.\nThe console size is currently %ix%i", ansiResetCursor, ansiRed, ansiBlackBackground, console_size.x, console_size.y);
-            continue;
-        }
-        */
 
-        //check recent inputs
+        //check for recent inputs
         while (kbhit()) {
-            //reset values
             //get first char from input buffer
             c = getch();
 
@@ -179,14 +67,17 @@ void main() {
                     getch(); //remove special characters
                 }
                 else {
+                    //if the active element is the search, box update the search query with the char
                     if (active_element == 34) {
                         update_string(query, query_length, c);
                     }
+                    //otherwise, a text input for the student data is active. update the data using the char.
                     else {
                         update_student_data(students, current_selected_entry, active_element, c);
                     }
                 }
             }
+            //no element is active -> update the highlighted element
             else {
 
                 //if it's a special character
@@ -194,6 +85,7 @@ void main() {
                     //get the next one
                     c = getch();
                     switch (c) {
+                        //change c into a char readable by update_highlighted_element
                         case 72: //up arrow
                             c = 'w';
                             break;
@@ -206,6 +98,7 @@ void main() {
                         case 75: //left arrow
                             c = 'a';
                             break;
+                        //update the table
                         case 73: //PgUp
                             if (table_entry > 0) {
                                 table_entry--; //if possible, go up
@@ -239,7 +132,7 @@ void main() {
                     update_highlighted_element(windowelements, windowelement_array_length, c);
                 }
             }
-            //Enter Pressed
+            //Enter Pressed -> switch the active state of the highlighted element and save the index
             if (c == 13) {
                 for (i = 0; i < windowelement_array_length; i++) {
                     if (windowelements[i].highlighted) {
@@ -263,6 +156,7 @@ void main() {
         //Generate table
         generate_table_ends(temp_table_string, false);
         windowelements[0] = make_window_element(1, 5, 71, temp_table_string, 0, 0, main_color, "", "", false, false);
+        //generate 30 elements to hold the table entries.
         for (i = 0; i < 30; i++) {
             n = matching_indices[i + 30 * table_page];
             if (n != -1) {
@@ -271,84 +165,22 @@ void main() {
             else {
                 sprintf(temp_table_string, "| - |%-32s|%-32s|", "", "");
             }
-            
+            //                                                                                                              element is set to active if it is selected
             windowelements[i + 1] = make_window_element(1, 6 + i, 71, temp_table_string, 0, 0, main_color, "", table_highlighted_color, false, i == table_entry);
         }
         generate_table_ends(temp_table_string, true);
         windowelements[31] = make_window_element(1, 36, 71, temp_table_string, 0, 0, main_color, "", "", false, false);
+        //table control explanation and page counter
         sprintf(temp_table_string, "Bild%c or Bild%c to go up/down. Pos1 or Ende to select page.   Page %i/5", 193, 194, table_page + 1);
         windowelements[32] = make_window_element(2, 4, 69, temp_table_string, 0, 0, main_color, "", "", false, false);
 
+        //copy the query into the search box to be displayed
         strcpy(windowelements[34].label, query);
         
+        //update the labels of all window elements to reflect possibly changed data
         update_windowelements_labels(windowelements, students, current_selected_entry, interactable_color, disabled_color);
         
+        //render all elements
         render(windowelements, windowelement_array_length, main_color);
     }
-    
-    
-    
-
-
-
-
-
-    //END OF ACTUAL CODE
-
-    //test non-waiting typing - WORKS!
-    //char c = 0;
-    //char buff[100] = "\0";
-    //int ptr = 0;
-    //int ctr = 0;
-    //while(c != '\n' && c != '\r'){
-    //    while(kbhit()){
-    //        c = getch();
-    //        if(c == 8 && ptr > 0){
-    //            ptr--;
-    //            buff[ptr] = '\0';
-    //        }
-    //        else if(c != 8){
-    //            buff[ptr] = c;
-    //            ptr++;
-    //            buff[ptr] = '\0';
-    //        }
-    //    }
-    //    printf("\033[2J\033[H%s\n%i", buff, ctr);
-    //    ctr++;
-    //    Sleep(500);
-    //}
-
-    //DYNAMIC SEARCHING. 
-
-    char t = '\0';
-    char buffer[100] = "\0";
-    int buffer_length = 0;
-    int num_results;
-    printf("> %s|\n", buffer);
-    do {
-        t = getch();
-        if (t == 8 && buffer_length > 0) {
-            buffer[buffer_length - 1] = '\0';
-            buffer_length--;
-        }
-        else if (t != 8 && t != '\r' && t != '\n') {
-            buffer[buffer_length] = t;
-            buffer[buffer_length + 1] = '\0';
-            buffer_length++;
-        }
-        printf("%s", "\033[2J\033[H");
-        printf("> %s|\n", buffer);
-        num_results = search_dataset(students, buffer, matching_indices);
-        for(int i = 0; i < num_results; i++){
-            printf("%3i: %s %s\n", i, students[matching_indices[i]].first_name, students[matching_indices[i]].last_name);
-        }
-    } while (t != '\r');
-    printf("%s", "\033[2J\033[H");
-    for (int i = 0; i < num_results; i++) {
-        printf("%s", "\n--------------------------------------------------------\n\n");
-        print_student(students[matching_indices[i]]);
-    }
-    getchar();
-
-
 }
