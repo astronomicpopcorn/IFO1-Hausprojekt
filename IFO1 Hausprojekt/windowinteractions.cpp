@@ -6,6 +6,7 @@
 
 // MOUSE INTERACTION DISCONTINUED DUE TO COMPLEXITY
 
+//returns position of window on screen in pixels
 bool get_window_position(Vector2D *topleft, Vector2D *size) {
     HWND console_window = GetForegroundWindow();
     if (console_window == NULL) {
@@ -26,6 +27,8 @@ bool get_window_position(Vector2D *topleft, Vector2D *size) {
     return false;
 }
 
+//returns a vector containing the size of the console in characters
+//no idea how this actually works
 Vector2D get_console_size() {
     Vector2D consolesize;
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -36,6 +39,7 @@ Vector2D get_console_size() {
     return consolesize;
 }
 
+//returns position of mouse on screen in pixels
 Vector2D get_mouse_position() {
     Vector2D result;
     result.x = -1;
@@ -48,6 +52,8 @@ Vector2D get_mouse_position() {
     return result;
 }
 
+//calculate where on the window the mouse is
+//this here is where mouse interaction failed. for some reason this is really inaccurate
 Vector2D get_mouse_on_window() {
     Vector2D result;
     Vector2D window_position, window_size, mouse_position;
@@ -68,6 +74,7 @@ Vector2D get_mouse_on_window() {
     return result;
 }
 
+//transform pixel coordinates to character coordinates
 Vector2D get_mouse_on_console() {
     Vector2D pos = get_mouse_on_window();
     Vector2D consolesize = get_console_size();

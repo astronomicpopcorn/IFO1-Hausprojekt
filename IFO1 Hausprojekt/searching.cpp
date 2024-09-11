@@ -14,7 +14,6 @@ bool strstr_insensitive(char *string_to_search, char *query_string) {
 
 
 //search a single datapoint for any match with a query. query will be split by whitespace and punctuation (Will return true if query is "Nick Heinz Olaf" and searched student contains "Nick" anywhere)
-//TODO: Make case insensitive
 bool search_datapoint(struct student *student, char _query[query_length]) {
     if (student->is_empty) {
         return false;
@@ -67,10 +66,11 @@ bool search_datapoint(struct student *student, char _query[query_length]) {
     //strstr() != NULL;
 }
 
-
+//search entire dataset. returns the number of results.
 int search_dataset(student students[dataset_size], char query[query_length], short int list_of_matching_indices[dataset_size]) {
     int num_of_matches = 0;
     int p = 0; //points to position in list_of_matching_indices
+    //no query? put all indices into list.
     if (strlen(query) == 0) {
         for (p = 0; p < dataset_size; p++) {
             list_of_matching_indices[p] = p;
@@ -78,6 +78,8 @@ int search_dataset(student students[dataset_size], char query[query_length], sho
         return 150;
     }
 
+    //go through all datapoints and see if they match the query. 
+    //if yes, add the index to the list.
     for (int i = 0; i < dataset_size; i++) {
         if (search_datapoint(&students[i], query)) {
             list_of_matching_indices[p] = i;
@@ -85,6 +87,7 @@ int search_dataset(student students[dataset_size], char query[query_length], sho
             num_of_matches++;
         }
     }
+    //fill the rest of the list with -1
     while (p < dataset_size) {
         list_of_matching_indices[p] = -1;
         p++;

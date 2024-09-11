@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 
+//creates the company email. format: firstname.lastname@company.de
+//replaces spaces with dashes
 void generate_company_email(char email_destination[email_length], char first_name[first_name_length], char last_name[last_name_length], char company_name[company_name_length]) {
     strcpy(email_destination, "");
     strcat(email_destination, first_name);
@@ -16,6 +18,8 @@ void generate_company_email(char email_destination[email_length], char first_nam
     replace_whitespace(email_destination, '-');
 }
 
+//creates the hs email. format: firstname.lastname@stud.hs21.de
+//replaces spaces with dashes
 void generate_hs21_email(char email_destination[email_length], char first_name[first_name_length], char last_name[last_name_length]) {
     strcpy(email_destination, "");
     strcat(email_destination, first_name);
@@ -25,7 +29,7 @@ void generate_hs21_email(char email_destination[email_length], char first_name[f
     replace_whitespace(email_destination, '-');
 }
 
-
+//returns an empty student
 student empty_datapoint(){
     student student;
     return student;
@@ -33,6 +37,7 @@ student empty_datapoint(){
 
 // very simple function to get a single datapoint. no fancy UI.
 //quick and dirty: max string length not fixed!!!
+//for testing only. unused
 student enter_datapoint() {
     student student;
 

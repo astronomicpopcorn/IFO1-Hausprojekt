@@ -1,4 +1,6 @@
 #pragma once
+//this fioe contains all constants used throughout the program.
+//this includes mostly string lengths.
 
 const unsigned short int dataset_size = 150;
 

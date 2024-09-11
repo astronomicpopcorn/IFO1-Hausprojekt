@@ -1,5 +1,8 @@
 #pragma once
 
+//nachschlaghilfe für farbcodes und so.
+
+
 char ansiClearScreen[] = "\033[2J\033[H";
 
 char ansiResetCursor[] = "\033[H";

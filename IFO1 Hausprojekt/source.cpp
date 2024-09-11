@@ -168,7 +168,7 @@ void main() {
         */
 
         //check recent inputs
-        if (kbhit()) {
+        while (kbhit()) {
             //reset values
             //get first char from input buffer
             c = getch();

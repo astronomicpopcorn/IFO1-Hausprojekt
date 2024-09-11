@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <conio.h>
 
+
+//deprecated. use strcpy instead.
 void copy_string(char* destination, char* source){
     unsigned short int dest_ctr = 0;
     unsigned short int src_ctr = 0;
@@ -21,7 +23,7 @@ void copy_string(char* destination, char* source){
     *(destination + dest_ctr) = '\0';
 }
 
-
+//loops through all chars in a string and converts to lowercase.
 void lowercase_string(char *ptr){
     while (*ptr) {
         *ptr = tolower((unsigned char) *ptr);
@@ -29,11 +31,12 @@ void lowercase_string(char *ptr){
     }
 }
 
+//returns true if any mouse buton is pressed. feature discontinued.
 bool is_mouse_pressed(){
     return GetAsyncKeyState(VK_LBUTTON) != 0;
 }
 
-
+//testing function. prints one student to the screen. not used due to custom print system.
 void print_student(student student){
     printf("%s %s\n", student.first_name, student.last_name);
     printf("(%s, Jahrgang %s)\n", student.course_of_study, student.enrollment_year);
@@ -52,6 +55,7 @@ void print_student(student student){
 
 
 //basic fileio
+//saves the dataset as a file with a given name. returns true if successful.
 bool save_file(student list[dataset_size], const char* filename){
     FILE *out;
     out = fopen(filename, "wb");
@@ -63,6 +67,7 @@ bool save_file(student list[dataset_size], const char* filename){
     return true;
 }
 
+//loads a dataset from a given filename. returns true if successful.
 bool load_file(student list[dataset_size], const char* filename){
     FILE *in;
     in = fopen(filename, "rb");
@@ -74,14 +79,18 @@ bool load_file(student list[dataset_size], const char* filename){
     return true;
 }
 
+//adds .db to the end of a string.
 void add_file_extension(char filename[filename_length]){
-    if(filename[0] == '\0'){
+    int len = strlen(filename);
+    //if string is empty, name the file "unnamed"
+    if(len == 0){
         strcpy(filename, "unnamed");
     }
-    int len = strlen(filename);
+    //if space is available, add extension.
     if(len < filename_length - 3){
         strcat(filename, ".db");
     }
+    //if space is occupied, overwrite the last 3 chars.
     else{
         filename[filename_length - 4] = '.';
         filename[filename_length - 3] = 'd';
@@ -90,7 +99,7 @@ void add_file_extension(char filename[filename_length]){
     }
 }
 
-
+//replaces all spaces in a string with a given char.
 void replace_whitespace(char* string_to_change, char replacement){
     for(int i = 0; string_to_change[i] != '\0'; i++){
         if(string_to_change[i] == ' '){
@@ -99,10 +108,15 @@ void replace_whitespace(char* string_to_change, char replacement){
     }
 }
 
+//replaces all special chars. for example: ä -> ae
+//writes the edited version into the provided buffer
 void replace_umlaute(char mystring[32], char buffer[64]){
+    //set pseudo pointers for striung indices
     int buffer_pointer = 0;
     int string_pointer = 0;
+    //loop through string until the end
     while(mystring[string_pointer] != '\0'){
+        //if a special character is found, write the replacement to the buffer
         if(mystring[string_pointer] == 'ä'){
             buffer[buffer_pointer] = 'a';
             buffer_pointer++;
@@ -138,6 +152,7 @@ void replace_umlaute(char mystring[32], char buffer[64]){
             buffer_pointer++;
             buffer[buffer_pointer] = 's';
         }
+        //no special char -> justr copy to the buffer
         else{
             buffer[buffer_pointer] = mystring[string_pointer];
         }
@@ -146,7 +161,9 @@ void replace_umlaute(char mystring[32], char buffer[64]){
 }
 
 
-//builds an element. type is 0 for plain text, 1 for button, and 2 for text input.
+//windowelement constructor. returns a windowelement struct with the specified values. 
+//type is 0 for plain text, 1 for button, and 2 for text input.
+//id is an optional identifier.
 windowelement make_window_element(int column, int row, int width, const char *label, int id, int type, const char *def_col, const char *highlight_col, const char *active_col, bool is_highlighted, bool is_active) {
     windowelement element;
     Vector2D pos = { column, row };
@@ -265,6 +282,9 @@ void update_highlighted_element(windowelement *element_array, int array_length, 
     }
 }
 
+//generates a string made from special line characters. for example: ┌ ─ ┬
+//not a string literal because VS encodes chars differently and they don't translate properly
+//string is flipped vertically based on provided bool.
 void generate_table_ends(char* table_string, bool is_bottom) {
     int i;
     if (!is_bottom) {
@@ -302,23 +322,70 @@ void generate_table_ends(char* table_string, bool is_bottom) {
 }
 
 //adds a char to the end of a string. unless it is backspace, then it makes the string shorter.
-void update_string(char *target_string, int target_string_max_length, char c) {
+//returns true if string is empty
+bool update_string(char *target_string, int target_string_max_length, char c) {
+    bool is_empty;
     int current_length = strlen(target_string);
-    if (c == 8) { //backspace
+    //initialize is_empty
+    if (current_length > 0) {
+        is_empty = false;
+    }
+    else {
+        is_empty = true;
+    }
+    //if char is backspace
+    if (c == 8) {
+        //if string has at least one char, replace last char with \0
         if (current_length > 0) {
             target_string[current_length - 1] = '\0';
+            //if new length is 0, string is empty
+            if (current_length - 1 == 0) {
+                is_empty = true;
+            }
         }
     }
-    //printable character
+    //if char is printable character (excludes ä, ö, ü and ß to avoid unwanted behavior elsewhere)
     else if ((c >= 32 && c <= 90) || (c >= 97 && c <= 122)) {
+        //if space is available
         if (current_length < target_string_max_length - 1) {
+            //add char to the end and terminate string again
             target_string[current_length] = c;
             target_string[current_length + 1] = '\0';
+            //string is now guaranteed to have at least one char
+            is_empty = false;
         }
     }
+    return is_empty;
 }
 
+//checks whether all strings in a given student are empty
+bool is_student_empty(student checked_student) {
+    return
+        checked_student.company.address.city[0] == '\0' &&
+        checked_student.company.address.house_number[0] == '\0' &&
+        checked_student.company.address.postal_code[0] == '\0' &&
+        checked_student.company.address.street[0] == '\0' &&
+        //checked_student.company.contact_person.email[0] == '\0' &&          email doesn't matter
+        checked_student.company.contact_person.first_name[0] == '\0' &&
+        checked_student.company.contact_person.last_name[0] == '\0' &&
+        checked_student.company.contact_person.phone_number[0] == '\0' &&
+        checked_student.company.name[0] == '\0' &&
+        checked_student.course_of_study[0] == '\0' &&
+        //checked_student.email[0] == '\0' &&                                 email doesn't matter
+        checked_student.enrollment_year[0] == '\0' &&
+        checked_student.first_name[0] == '\0' &&
+        checked_student.home_address.city[0] == '\0' &&
+        checked_student.home_address.house_number[0] == '\0' &&
+        checked_student.home_address.postal_code[0] == '\0' &&
+        checked_student.home_address.street[0] == '\0' &&
+        checked_student.last_name[0] == '\0' &&
+        checked_student.phone_number[0] == '\0' &&
+        checked_student.student_number[0] == '\0';
+}
+
+//updates the selected student's entries based on table selector and selected input box
 void update_student_data(student *student_array, int student_index, int element_index, char c) {
+    //switch which string to update based on selected input
     switch (element_index) {
         case 36:
             update_string(student_array[student_index].first_name, first_name_length, c);
@@ -377,27 +444,38 @@ void update_student_data(student *student_array, int student_index, int element_
             update_string(student_array[student_index].company.contact_person.last_name, last_name_length, c);
             break;
     }
+    //regenerate emails and set empty flag correctly
     generate_hs21_email(student_array[student_index].email, student_array[student_index].first_name, student_array[student_index].last_name);
     generate_company_email(student_array[student_index].company.contact_person.email, student_array[student_index].company.contact_person.first_name, student_array[student_index].company.contact_person.last_name, student_array[student_index].company.name);
+    student_array[student_index].is_empty = is_student_empty(student_array[student_index]);
 }
 
+//disables input boxes when table selector is on invalid entry
+//updates labels of all windowelement input boxes to match selected student
 void update_windowelements_labels(windowelement *element_array, student *student_array, int student_index, char *on_color, char *off_color) {
     int i;
+    //invalid student selected (table selector on entry without associated index)
     if (student_index == -1) {
+        //loop through all relevant input boxes
         for (i = 36; i <= 74; i += 2) {
+            //clear label
             strcpy(element_array[i].label, "");
+            //exclude email boxes
             if (i != 46 && i != 56) {
+                //set color to red and type to non-interactable
                 strcpy(element_array[i].default_color, off_color);
                 element_array[i].type = 0;
             }
         }
+        //quit. elements no longer need updating
         return;
     }
-    //check if they are disabled
+    //check if elements are disabled (all elements will be disabled together)
     if (element_array[36].type == 0) {
         for (i = 36; i <= 74; i += 2) {
+            //exclude email elements
             if (i != 46 && i != 56) {
-                //reactivate
+                //set color to normal and type to text input
                 strcpy(element_array[i].default_color, on_color);
                 element_array[i].type = 2;
             }
@@ -406,7 +484,8 @@ void update_windowelements_labels(windowelement *element_array, student *student
 
 
     student selected_student = student_array[student_index];
-
+    
+    //set all labels
     strcpy(element_array[36].label, selected_student.first_name);
     strcpy(element_array[38].label, selected_student.student_number);
     strcpy(element_array[40].label, selected_student.phone_number);
@@ -430,6 +509,8 @@ void update_windowelements_labels(windowelement *element_array, student *student
     strcpy(element_array[74].label, selected_student.company.contact_person.last_name);
 }
 
+//creates part of the initial windowelements array.
+//specifically all elements for editing and viewing a student
 void initialize_windowelements(windowelement *element_array, char *main_color, char *interactable_color, char *highlight_color, char *active_color) {
     //info display column 1
     element_array[35] = make_window_element(75, 2, 16, "    First Name:", 0, 0, main_color, "", "", false, false);
