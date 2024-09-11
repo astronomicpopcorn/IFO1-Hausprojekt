@@ -38,6 +38,9 @@ void main() {
     //search query
     char query[query_length] = "";
 
+    //file name for hard disk storage
+    char filename[filename_length] = "dataset1";
+
     //array that stores all window elements
     windowelement windowelements[windowelement_array_length];
 
@@ -53,6 +56,15 @@ void main() {
 
     initialize_windowelements(windowelements, main_color, interactable_color, highlight_color, active_color);
 
+    windowelements[77] = make_window_element(4, 38, 64, "File Name:", 0, 0, main_color, "", "", false, false);
+    windowelements[78] = make_window_element(4, 39, 64, filename, 2, 2, interactable_color, highlight_color, active_color, false, false);
+    windowelements[79] = make_window_element(92, 39, 12, "Save", 10, 1, interactable_color, highlight_color, active_color, false, false);
+    windowelements[80] = make_window_element(117, 39, 12, "Load", 11, 1, interactable_color, highlight_color, active_color, false, false);
+    windowelements[81] = make_window_element(143, 39, 12, "Delete", 12, 1, interactable_color, highlight_color, active_color, false, false);
+
+
+
+
     //main loop
     while(true){
 
@@ -61,15 +73,48 @@ void main() {
             //get first char from input buffer
             c = getch();
 
+            //Enter Pressed -> switch the active state of the highlighted element and save the index
+            if (c == 13) {
+                for (i = 0; i < windowelement_array_length; i++) {
+                    if (windowelements[i].highlighted) {
+                        if(windowelements[i].type == 2) {
+                            if (windowelements[i].active) {
+                                windowelements[i].active = false;
+                                active_element = -1; //deactivate
+                            } else {
+                                windowelements[i].active = true;
+                                active_element = i; //activate
+                            }
+                        }
+                        else if (windowelements[i].type == 1) {
+                            //handle button press based on id
+                            switch (windowelements[i].id) {
+                                case 10:
+                                    break;
+                                case 11:
+                                    break;
+                                case 12:
+                                    break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
             //if any element of type 2 is active
             if (active_element > 0 && windowelements[active_element].type == 2) {
                 if (c == -32) {
                     getch(); //remove special characters
                 }
                 else {
-                    //if the active element is the search, box update the search query with the char
+                    //if the active element is the search box, update the search query with the char
                     if (active_element == 34) {
                         update_string(query, query_length, c);
+                    }
+                    //if the active element is the filename input, update the filename with the char
+                    else if (active_element == 78) {
+                        update_string(filename, filename_length, c);
                     }
                     //otherwise, a text input for the student data is active. update the data using the char.
                     else {
@@ -132,21 +177,7 @@ void main() {
                     update_highlighted_element(windowelements, windowelement_array_length, c);
                 }
             }
-            //Enter Pressed -> switch the active state of the highlighted element and save the index
-            if (c == 13) {
-                for (i = 0; i < windowelement_array_length; i++) {
-                    if (windowelements[i].highlighted) {
-                        if (windowelements[i].active) {
-                            windowelements[i].active = false;
-                            active_element = -1; //deactivate
-                        } else {
-                            windowelements[i].active = true;
-                            active_element = i; //activate
-                        }
-                        break;
-                    }
-                }
-            }
+     
         }
 
         //filter entire database with query
@@ -176,6 +207,9 @@ void main() {
 
         //copy the query into the search box to be displayed
         strcpy(windowelements[34].label, query);
+
+        //copy the filename into the filename input to be displayed
+        strcpy(windowelements[78].label, filename);
         
         //update the labels of all window elements to reflect possibly changed data
         update_windowelements_labels(windowelements, students, current_selected_entry, interactable_color, disabled_color);
