@@ -462,6 +462,11 @@ void update_student_data(student *student_array, int student_index, int element_
     generate_hs21_email(student_array[student_index].email, student_array[student_index].first_name, student_array[student_index].last_name);
     generate_company_email(student_array[student_index].company.contact_person.email, student_array[student_index].company.contact_person.first_name, student_array[student_index].company.contact_person.last_name, student_array[student_index].company.name);
     student_array[student_index].is_empty = is_student_empty(student_array[student_index]);
+    //if student is empty, clear emails
+    if (student_array[student_index].is_empty) {
+        strcpy(student_array[student_index].email, "");
+        strcpy(student_array[student_index].company.contact_person.email, "");
+    }
 }
 
 //disables input boxes when table selector is on invalid entry

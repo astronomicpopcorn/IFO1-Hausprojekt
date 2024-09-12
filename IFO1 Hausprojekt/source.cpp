@@ -238,10 +238,9 @@ void main() {
         render(windowelements, windowelement_array_length, main_color);
         //count frame
         frame++;
-        if (frame > 100) {
+        if (frame > 300) {
             frame = 0;
             save_file(students, "autosave.db");
         }
-
     }
 }
