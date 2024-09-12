@@ -20,7 +20,7 @@ typedef struct contact_person {
     char first_name[first_name_length] = "\0";
     char last_name[last_name_length] = "\0";
     char phone_number[phone_number_length] = "\0";
-    char email[email_length] = "\0";
+    char email[email_length] = ".@.de";
 };
 
 typedef struct company {
@@ -35,7 +35,7 @@ typedef struct student {
     char student_number[student_number_length] = "\0";
     char first_name[first_name_length] = "\0";
     char last_name[last_name_length] = "\0";
-    char email[email_length] = "\0";
+    char email[email_length] = ".@stud.hs21.de";
     char enrollment_year[enrollment_year_length] = "\0";
     char course_of_study[course_of_study_length] = "\0";
     address home_address;

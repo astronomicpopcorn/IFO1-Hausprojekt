@@ -29,6 +29,9 @@ void main() {
     //random temporary variables for loops and the like
     int i, j, k, l, m, n;
 
+    //frame counter for autosave
+    int frame = 0;
+
     //variables for table control
     int table_page = 0, table_entry = 0;
     char temp_table_string[72];
@@ -40,6 +43,7 @@ void main() {
 
     //file name for hard disk storage
     char filename[filename_length] = "dataset1";
+    char filename_with_extension[filename_length] = "dataset1.db";
 
     //array that stores all window elements
     windowelement windowelements[windowelement_array_length];
@@ -58,15 +62,20 @@ void main() {
 
     windowelements[77] = make_window_element(4, 38, 64, "File Name:", 0, 0, main_color, "", "", false, false);
     windowelements[78] = make_window_element(4, 39, 64, filename, 2, 2, interactable_color, highlight_color, active_color, false, false);
-    windowelements[79] = make_window_element(92, 39, 12, "Save", 10, 1, interactable_color, highlight_color, active_color, false, false);
-    windowelements[80] = make_window_element(117, 39, 12, "Load", 11, 1, interactable_color, highlight_color, active_color, false, false);
-    windowelements[81] = make_window_element(143, 39, 12, "Delete", 12, 1, interactable_color, highlight_color, active_color, false, false);
+    windowelements[79] = make_window_element(74, 39, 12, "Save", 10, 1, interactable_color, highlight_color, active_color, false, false);
+    windowelements[80] = make_window_element(92, 39, 12, "Load", 11, 1, interactable_color, highlight_color, active_color, false, false);
+    windowelements[81] = make_window_element(74, 41, 12, "Delete", 12, 1, interactable_color, highlight_color, active_color, false, false);
 
+    windowelements[82] = make_window_element(92, 41, 12, "Quit", 13, 1, interactable_color, highlight_color, active_color, false, false);
 
+    //attempt to load last autosave
+    load_file(students, "autosave.db");
 
+    //variable set to false when program should be quit
+    bool continue_program = true;
 
     //main loop
-    while(true){
+    while(continue_program){
 
         //check for recent inputs
         while (kbhit()) {
@@ -89,11 +98,22 @@ void main() {
                         else if (windowelements[i].type == 1) {
                             //handle button press based on id
                             switch (windowelements[i].id) {
-                                case 10:
+                                case 10: //save file
+                                    add_file_extension(filename, filename_with_extension);
+                                    save_file(students, filename_with_extension);
                                     break;
-                                case 11:
+                                case 11: //load file
+                                    add_file_extension(filename, filename_with_extension);
+                                    load_file(students, filename_with_extension);
                                     break;
-                                case 12:
+                                case 12: //delete file
+                                    add_file_extension(filename, filename_with_extension);
+                                    delete_file(filename_with_extension);
+                                    break;
+
+                                case 13: //quit program
+                                    save_file(students, "autosave.db");
+                                    continue_program = false;
                                     break;
                             }
                         }
@@ -216,5 +236,12 @@ void main() {
         
         //render all elements
         render(windowelements, windowelement_array_length, main_color);
+        //count frame
+        frame++;
+        if (frame > 100) {
+            frame = 0;
+            save_file(students, "autosave.db");
+        }
+
     }
 }

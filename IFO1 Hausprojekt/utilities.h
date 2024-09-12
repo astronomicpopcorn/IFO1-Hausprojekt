@@ -8,7 +8,8 @@ extern void print_student(student student);
 
 extern bool save_file(student list[dataset_size], const char* filename);
 extern bool load_file(student list[dataset_size], const char* filename);
-extern void add_file_extension(char filename[filename_length]);
+extern bool delete_file(const char *filename);
+extern void add_file_extension(char source[filename_length], char target[filename_length]);
 
 extern void replace_whitespace(char* string_to_change, char replacement);
 

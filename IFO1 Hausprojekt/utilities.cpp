@@ -79,23 +79,37 @@ bool load_file(student list[dataset_size], const char* filename){
     return true;
 }
 
+//deletes specified file. returns true if successful.
+bool delete_file(const char *filename) {
+    FILE *in;
+    in = fopen(filename, "rb");
+    if (in == NULL) {
+        return false;
+    }
+    fclose(in);
+    remove(filename);
+    return true;
+}
+
 //adds .db to the end of a string.
-void add_file_extension(char filename[filename_length]){
-    int len = strlen(filename);
+void add_file_extension(char source[filename_length], char target[filename_length]) {
+    int len = strlen(source);
+    //copy source into target
+    strcpy(target, source);
     //if string is empty, name the file "unnamed"
     if(len == 0){
-        strcpy(filename, "unnamed");
+        strcpy(target, "unnamed");
     }
     //if space is available, add extension.
     if(len < filename_length - 3){
-        strcat(filename, ".db");
+        strcat(target, ".db");
     }
     //if space is occupied, overwrite the last 3 chars.
     else{
-        filename[filename_length - 4] = '.';
-        filename[filename_length - 3] = 'd';
-        filename[filename_length - 2] = 'b';
-        filename[filename_length - 1] = '\0';
+        target[filename_length - 4] = '.';
+        target[filename_length - 3] = 'd';
+        target[filename_length - 2] = 'b';
+        target[filename_length - 1] = '\0';
     }
 }
 
